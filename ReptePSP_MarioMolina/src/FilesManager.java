@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class FilesManager {
 
-    public static final String FILE_PATH_USERS = "admin\\users.txt";
+    private static final String FILE_PATH_USERS = "admin\\users.txt";
     public static final String FILE_PATH_2 = "admin\\users2.txt";
     public static final String FILE_PATH_GAMES = "admin\\games.txt";
 
