@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,12 +39,13 @@ public class Gestions {
      * @return Usuari modificat
      * @throws FileNotFoundException No es troba l'arxiu a la ruta seleccionada
      * */
-    public static Usuari gestionarJocs(Usuari u) throws FileNotFoundException {
+    public static Usuari gestionarJocs(Usuari u) throws IOException {
         List<Joc> jocs = FilesManager.llegirJocs();
-        List<Integer> jocsDisponibles = GestioJocs.retornarJocsDisponibles (u,jocs);
-        if(!jocsDisponibles.isEmpty())
+        List<GamesBuyed> jocsComprats = FilesManager.llegirJocsComprats(u.getNomUsuari());
+        List<Joc> jocsDisponibles = GestioJocs.retornarJocsDisponibles (jocs,jocsComprats);
+        if(jocsDisponibles.size()>=0)
         {
-            u = comprarJoc(jocsDisponibles,jocs,u);
+           comprarJoc(jocsDisponibles,u);
         }
         else
         {
@@ -173,7 +175,6 @@ public class Gestions {
         u.setEmail(Keyboard.readString());
         System.out.print("Introdueix la teva contrasenya: ");
         u.setPassword(Keyboard.readString());
-        u.setJocsComprats("000");
         return u;
     }
 
@@ -191,7 +192,7 @@ public class Gestions {
     public static Usuari afegirSaldo(Usuari u) {
         System.out.print("Quant saldo vols afegir: ");
         int nouSaldo = Keyboard.readInt();
-        if(nouSaldo>20)
+        if(nouSaldo<20)
         {
             u.setSaldo(u.getSaldo()+nouSaldo);
             System.out.println("SALDO AFEGIT CORRECTAMENT");
@@ -204,19 +205,26 @@ public class Gestions {
         return u;
     }
 
-    public static Usuari comprarJoc(List<Integer> jocsDisponibles, List<Joc> jocs,Usuari u) {
-        System.out.print("Quin joc vols comprar: ");
-        int opcio = Keyboard.readInt();
-        if (jocsDisponibles.contains(opcio - 1)) {
-            if (jocs.get(opcio - 1).getPreuJoc() <= u.getSaldo()) {
-                u.modificarJocsComprats(opcio);
-                u.setSaldo(u.getSaldo() - jocs.get(opcio - 1).getPreuJoc());
-            } else {
-                System.out.println("ERROR - No tens suficient saldo per comprar el joc");
-            }
-        } else {
-            System.out.println("ERROR - Aquest joc no està disponible");
+    public static void comprarJoc(List<Joc> jocsDisponibles,Usuari u) throws IOException {
+        mostrarLlistaJocs(jocsDisponibles);
+        System.out.print("Quin joc vols comptar? ");
+        int joc = Keyboard.readInt()-1;
+        if(joc >=0 && joc < jocsDisponibles.size())
+        {
+            GamesBuyed game = new GamesBuyed(u.getNomUsuari(),jocsDisponibles.get(joc).getNomJoc());
+            FilesManager.guardarJocCompratTxt(game);
         }
-        return u;
+        else
+        {
+            System.out.println("Aquest joc no es pot comprar");
+        }
+    }
+
+    public static void mostrarLlistaJocs(List<Joc> jocs)
+    {
+        for (int i = 0;i<jocs.size();i++)
+        {
+            System.out.println(i+1+" - "+jocs.get(i).getNomJoc()+ " -> "+jocs.get(i).getPreuJoc());
+        }
     }
 }

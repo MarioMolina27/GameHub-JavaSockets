@@ -4,41 +4,30 @@ import java.util.List;
 public class GestioJocs
 {
     /**
-     *  Funció que busca en l'string dels jocs comprats si l'usuari té comprat el joc demanat
-     *  @return boleà que indica si el jugador ha comprat el joc
-     *  @param usuari usuari a comprovar
-     *  @param posicio posicio del string del camp de jocs comprar per comprovar si l'ha comprat
+     * Funció que retorna els jocs disponibles d'un usuari
+     * @return Llista de jocs disponibles
      * */
-    public static Boolean comprobarJocComprat(Usuari usuari,int posicio)
+    public static List<Joc> retornarJocsDisponibles (List<Joc> jocs,List<GamesBuyed> jocsComprats)
     {
-        boolean comprat;
-        char joc = usuari.getJocsComprats().charAt(posicio);
-        if(joc=='0')
+        List<Joc> jocsDisponibles = new ArrayList<>();
+        if(!jocsComprats.isEmpty())
         {
-            comprat=false;
+            for (int i =0;i<jocs.size();i++)
+            {
+                for (int j =0;j<jocsComprats.size();j++)
+                {
+                    if(!jocs.get(i).getNomJoc().equals(jocsComprats.get(j).getNomJoc()))
+                    {
+                        jocsDisponibles.add(jocs.get(i));
+                    }
+                }
+            }
         }
         else
         {
-            comprat=true;
-        }
-        return comprat;
-    }
-    /**
-     * Funció que retorna els jocs disponibles d'un usuari
-     * @return Llista de jocs disponibles
-     * @param usuari usuari a verificar
-     * */
-    public static List<Integer> retornarJocsDisponibles (Usuari usuari,List<Joc> jocs)
-    {
-        List<Integer> jocsDisponibles = new ArrayList<>();
-        for (int i =0;i<jocs.size();i++)
-        {
-            if(!comprobarJocComprat(usuari,i))
-            {
-                System.out.println(i+1+" - Nom del joc: "+jocs.get(i).getNomJoc()+" Preu: "+jocs.get(i).getPreuJoc());
-                jocsDisponibles.add(i);
-            }
+            jocsDisponibles = jocs;
         }
         return jocsDisponibles;
     }
+
 }

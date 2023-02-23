@@ -8,7 +8,7 @@ public class FilesManager {
     private static final String FILE_PATH_USERS = "admin\\users.txt";
     public static final String FILE_PATH_2 = "admin\\users2.txt";
     public static final String FILE_PATH_GAMES = "admin\\games.txt";
-
+    public static final String FILE_PATH_GAMES_BUYED = "admin\\GamesBuyed.txt";
     /**
      * Funció que guarda al final de l'arxiu txt l'usuari introduit per l'usuari
      * @param u objecte usuari a guardar
@@ -16,10 +16,19 @@ public class FilesManager {
      * */
 
     public static void guardarUsuariTxt(Usuari u) throws IOException {
-        String usuari = u.getNomUsuari()+":"+u.getNom()+":"+u.getCognoms()+":"+u.getEmail()+":"+u.getCompteCorrent()+":"+u.getPassword()+":"+u.getSaldo()+":"+u.getJocsComprats();
+        String usuari = u.getNomUsuari()+":"+u.getNom()+":"+u.getCognoms()+":"+u.getEmail()+":"+u.getCompteCorrent()+":"+u.getPassword()+":"+u.getSaldo();
         FileWriter fw = new FileWriter(FILE_PATH_USERS, true);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(usuari + "\n");
+        bw.close();
+
+    }
+
+    public static void guardarJocCompratTxt(GamesBuyed g) throws IOException {
+        String game = g.getNomUsuari()+":"+g.getNomJoc();
+        FileWriter fw = new FileWriter(FILE_PATH_GAMES_BUYED, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(game + "\n");
         bw.close();
 
     }
@@ -188,7 +197,7 @@ public class FilesManager {
     public static Usuari retornarObjecteUsuari(String stringUsuari)
     {
         String[] parts = stringUsuari.split(":");
-        return new Usuari(parts[0],parts[5],parts[1],parts[2],parts[4],parts[3],Integer.parseInt(parts[6]),parts[7]);
+        return new Usuari(parts[0],parts[5],parts[1],parts[2],parts[4],parts[3],Integer.parseInt(parts[6]));
     }
 
     /**
@@ -197,7 +206,7 @@ public class FilesManager {
      * @throws IOException Errors d'entrada o sortida de dades
      * */
     public static void modificarTXT(Usuari u) throws IOException {
-        String stringUsuari = u.getNomUsuari()+":"+u.getNom()+":"+u.getCognoms()+":"+u.getEmail()+":"+u.getCompteCorrent()+":"+u.getPassword()+":"+u.getSaldo()+":"+u.getJocsComprats();
+        String stringUsuari = u.getNomUsuari()+":"+u.getNom()+":"+u.getCognoms()+":"+u.getEmail()+":"+u.getCompteCorrent()+":"+u.getPassword()+":"+u.getSaldo();
         int i, finalIndex;
         File oldUsuaris = new File(FILE_PATH_USERS);
         FileReader arxiu = new FileReader(FILE_PATH_USERS);
@@ -254,6 +263,19 @@ public class FilesManager {
         while (s.hasNext()){
             String[] parts = s.next().split(":");
             list.add(new Joc(parts[0],parts[1]));
+        }
+        s.close();
+        return list;
+    }
+    public static List<GamesBuyed> llegirJocsComprats (String nomUsuari) throws FileNotFoundException {
+        Scanner s = new Scanner(new File(FILE_PATH_GAMES_BUYED));
+        List<GamesBuyed> list = new ArrayList<>();
+        while (s.hasNext()){
+            String[] parts = s.next().split(":");
+            if(parts[0].equals(nomUsuari))
+            {
+                list.add(new GamesBuyed(parts[0],parts[1]));
+            }
         }
         s.close();
         return list;

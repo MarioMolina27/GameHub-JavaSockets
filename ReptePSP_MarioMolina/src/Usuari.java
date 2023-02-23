@@ -15,14 +15,10 @@ public class Usuari {
     private String compteCorrent;
     private String email;
     private int saldo;
-    private String jocsComprats;
+
 
     public String getCognoms() {
         return cognoms;
-    }
-
-    public String getJocsComprats() {
-        return jocsComprats;
     }
 
     public int getSaldo() {
@@ -51,10 +47,6 @@ public class Usuari {
 
     public void setCognoms(String cognoms) {
         this.cognoms = cognoms;
-    }
-
-    public void setJocsComprats(String jocsComprats) {
-        this.jocsComprats = jocsComprats;
     }
 
     public void setCompteCorrent(String compteCorrent) {
@@ -97,10 +89,9 @@ public class Usuari {
         this.compteCorrent = compteCorrent;
         this.email = email;
         this.saldo = SALDO_INICIAL;
-        this.jocsComprats = "000";
     }
 
-    public Usuari(String nomUsuari, String password, String nom, String cognoms, String compteCorrent, String email, int saldo, String jocsComprats) {
+    public Usuari(String nomUsuari, String password, String nom, String cognoms, String compteCorrent, String email, int saldo) {
         this.nomUsuari = nomUsuari;
         this.nom = nom;
         this.password = password;
@@ -108,18 +99,9 @@ public class Usuari {
         this.compteCorrent = compteCorrent;
         this.email = email;
         this.saldo = saldo;
-        this.jocsComprats = jocsComprats;
     }
 
-    /**
-     * Funció que modifica l'string dels jocs comprats per l'usuari, marcant que ha comprat el joc selecionat
-     * Si el jugador té el joc concret el caràcter relacionat amb aquest es trobarà en 1 en cas que no el tingui serà 0.
-     * @param posicio posicio del string del camp de jocs comprar a modificar per indicar que l'ha comprat
-     */
-    public void modificarJocsComprats(int posicio) {
-        String newIdJocs = this.getJocsComprats().substring(0, posicio - 1) + '1' + this.getJocsComprats().substring(posicio);
-        this.setJocsComprats(newIdJocs);
-    }
+
 
 
 }

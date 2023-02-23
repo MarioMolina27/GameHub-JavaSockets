@@ -1,8 +1,6 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class Main {
 
@@ -98,28 +96,25 @@ public class Main {
      * @param usuari usuari actual que està jugant
      * */
     public static void jugar(Usuari usuari) throws FileNotFoundException {
-        List<Integer> jocsDisponibles = new ArrayList<>();
-        List<Joc> jocs = FilesManager.llegirJocs();
-        for(int i =0;i<usuari.getJocsComprats().length();i++)
-        {
-            if(GestioJocs.comprobarJocComprat(usuari,i))
-            {
-                System.out.println(i+1+" - Vols jugar a "+jocs.get(i).getNomJoc());
-                jocsDisponibles.add(i);
-            }
-        }
+        List<GamesBuyed> jocsDisponibles = FilesManager.llegirJocsComprats(usuari.getNomUsuari());
+
         if(!jocsDisponibles.isEmpty())
         {
+            mostrarLlistaJocs(jocsDisponibles);
             System.out.print("Opció: ");
-            int opcio = Keyboard.readInt();
-            if (jocsDisponibles.contains(opcio-1))
+            int opcio = Keyboard.readInt()-1;
+            if(opcio >=0 && opcio < jocsDisponibles.size())
             {
-                System.out.println("ESTAS JUGANT A "+jocs.get(opcio-1).getNomJoc());
+                System.out.println("Estas jugant a "+ jocsDisponibles.get(opcio).getNomJoc());
             }
             else
             {
-                System.out.println("No tens disponible aquest joc");
+                System.out.println("Opció de joc incorrecte");
             }
+        }
+        else
+        {
+            System.out.println("No tens jocs per jugar, primer compra'n algún");
         }
     }
 
@@ -132,6 +127,14 @@ public class Main {
         for (int i =0;i<num;i++)
         {
             System.out.println();
+        }
+    }
+
+    public static void mostrarLlistaJocs(List<GamesBuyed> jocs)
+    {
+        for (int i = 0;i<jocs.size();i++)
+        {
+            System.out.println(i+1+" - "+jocs.get(i).getNomJoc());
         }
     }
 }
