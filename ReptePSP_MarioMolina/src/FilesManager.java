@@ -21,6 +21,7 @@ public class FilesManager {
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(usuari + "\n");
         bw.close();
+
     }
     /**
      * Funció que comproba que a l'arxiu txt no existeix un usuari amb el mateix nickname
@@ -126,7 +127,7 @@ public class FilesManager {
      * @param usuari nom de l'usuari que s'ha de retornar
      * @return objecte Usuari
      * */
-    public static Usuari buscarUsuariTxt(String usuari)
+    public static Usuari buscarUsuariTxt(String usuari,String password)
     {
         Usuari u = new Usuari();
         String usuari1 = null;
@@ -171,6 +172,11 @@ public class FilesManager {
         if(usuari1!=null)
         {
             u = retornarObjecteUsuari(usuari1);
+            boolean contrasenyaCorrecte = Blowfish.checkPassword(u.getPassword(),password);
+            if (!contrasenyaCorrecte)
+            {
+                u = new Usuari();
+            }
         }
         return u;
     }
