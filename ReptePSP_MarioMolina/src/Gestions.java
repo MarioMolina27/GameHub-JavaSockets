@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,8 +43,8 @@ public class Gestions {
     public static Usuari gestionarJocs(Usuari u) throws IOException {
         List<Joc> jocs = FilesManager.llegirJocs();
         List<GamesBuyed> jocsComprats = FilesManager.llegirJocsComprats(u.getNomUsuari());
-        List<Joc> jocsDisponibles = GestioJocs.retornarJocsDisponibles (jocs,jocsComprats);
-        if(jocsDisponibles.size()>=0)
+        List<Joc> jocsDisponibles = Gestions.retornarJocsDisponibles (jocs,jocsComprats);
+        if(jocsDisponibles.size()>0)
         {
            comprarJoc(jocsDisponibles,u);
         }
@@ -206,13 +207,24 @@ public class Gestions {
     }
 
     public static void comprarJoc(List<Joc> jocsDisponibles,Usuari u) throws IOException {
+        System.out.println("Salari actual: "+u.getSaldo());
         mostrarLlistaJocs(jocsDisponibles);
         System.out.print("Quin joc vols comptar? ");
         int joc = Keyboard.readInt()-1;
         if(joc >=0 && joc < jocsDisponibles.size())
         {
             GamesBuyed game = new GamesBuyed(u.getNomUsuari(),jocsDisponibles.get(joc).getNomJoc());
-            FilesManager.guardarJocCompratTxt(game);
+            int preu = getPreuJoc(game.getNomJoc(),jocsDisponibles);
+            if(preu<u.getSaldo())
+            {
+                FilesManager.guardarJocCompratTxt(game);
+                u.setSaldo(u.getSaldo() - preu);
+            }
+            else
+            {
+                System.out.println("No tens prou salari");
+            }
+
         }
         else
         {
@@ -226,5 +238,49 @@ public class Gestions {
         {
             System.out.println(i+1+" - "+jocs.get(i).getNomJoc()+ " -> "+jocs.get(i).getPreuJoc());
         }
+    }
+
+    /**
+     * Funció que retorna els jocs disponibles d'un usuari
+     * @return Llista de jocs disponibles
+     * */
+    public static List<Joc> retornarJocsDisponibles (List<Joc> jocs,List<GamesBuyed> jocsComprats)
+    {
+        List<Joc> jocsDisponibles = new ArrayList<>();
+        List<String> nomsJocsCoincidents = new ArrayList<String>();
+        if(jocsComprats.size() != jocs.size())
+        {
+            for (GamesBuyed joc : jocsComprats) {
+                nomsJocsCoincidents.add(joc.getNomJoc());
+            }
+
+            for (Joc joc : jocs) {
+                boolean coincidencia = false;
+                for (String nomJocCoincident : nomsJocsCoincidents) {
+                    if (joc.getNomJoc().equals(nomJocCoincident)) {
+                        coincidencia = true;
+                        break;
+                    }
+                }
+                if (!coincidencia) {
+                    jocsDisponibles.add(joc);
+                }
+            }
+        }
+        return jocsDisponibles;
+    }
+
+    public static int getPreuJoc(String nomJoc,List<Joc> jocs)
+    {
+        int preuJoc =0;
+        int i =0;
+        while(preuJoc ==0)
+        {
+            if(jocs.get(i).getNomJoc().equals(nomJoc))
+            {
+                preuJoc = jocs.get(i).getPreuJoc();
+            }
+        }
+        return preuJoc;
     }
 }

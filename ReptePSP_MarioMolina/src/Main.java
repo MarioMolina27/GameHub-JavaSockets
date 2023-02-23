@@ -117,7 +117,6 @@ public class Main {
             System.out.println("No tens jocs per jugar, primer compra'n algún");
         }
     }
-
     /**
      * Funció que fica un no determinat d'espais al terminal per tal de netegar-lo
      * @param num numero d'espais
@@ -129,7 +128,6 @@ public class Main {
             System.out.println();
         }
     }
-
     public static void mostrarLlistaJocs(List<GamesBuyed> jocs)
     {
         for (int i = 0;i<jocs.size();i++)
