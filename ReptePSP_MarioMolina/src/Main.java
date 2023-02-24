@@ -49,19 +49,15 @@ public class Main {
                     switch (opcio) {
                         case 1:
                             jugar(usuariActual);
-                            espaiarElements(5);
                             break;
                         case 2:
                             usuariActual = Gestions.gestionarJocs(usuariActual);
-                            espaiarElements(5);
                             break;
                         case 3:
                             usuariActual = Gestions.modificarSaldo(usuariActual);
-                            espaiarElements(5);
                             break;
                         case 4:
                             usuariActual = Gestions.modificarDadesUsuari(usuariActual);
-                            espaiarElements(5);
                             break;
                         case 0:
                             continuar=false;

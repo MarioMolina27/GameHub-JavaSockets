@@ -4,6 +4,8 @@ public class GamesBuyed {
     private int tarifaPlana;
     private int partidesComprades;
 
+    public GamesBuyed() {}
+
 
     public String getNomJoc() {
         return nomJoc;

@@ -26,7 +26,7 @@ public class FilesManager {
     }
 
     public static void guardarJocCompratTxt(GamesBuyed g) throws IOException {
-        String game = g.getNomUsuari()+":"+g.getNomJoc();
+        String game = g.getNomUsuari()+":"+g.getNomJoc()+":"+g.getPartidesComprades()+":"+g.getTarifaPlana();
         FileWriter fw = new FileWriter(FILE_PATH_GAMES_BUYED, true);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(game + "\n");
@@ -198,7 +198,7 @@ public class FilesManager {
     public static Usuari retornarObjecteUsuari(String stringUsuari)
     {
         String[] parts = stringUsuari.split(":");
-        return new Usuari(parts[0],parts[5],parts[1],parts[2],parts[4],parts[3],Integer.parseInt(parts[6]));
+        return new Usuari(parts[0],parts[5],parts[1],parts[2],parts[4],parts[3],Double.parseDouble(parts[6]));
     }
 
     /**
@@ -247,6 +247,7 @@ public class FilesManager {
     public static void modificarTxtJocsComprats(GamesBuyed g) throws IOException {
         String stringUsuari = g.getNomUsuari()+":"+g.getNomJoc()+":"+g.getPartidesComprades()+":"+g.getTarifaPlana();
         int i, finalIndex,separador;
+        boolean registre_trobat = false;
         File oldUsuaris = new File(FILE_PATH_GAMES_BUYED);
         FileReader arxiu = new FileReader(FILE_PATH_GAMES_BUYED);
         BufferedReader br = new BufferedReader(arxiu);
@@ -279,6 +280,7 @@ public class FilesManager {
             else
             {
                 bw.write(stringUsuari+"\n");
+                registre_trobat = true;
             }
             s = br.readLine();
         }
@@ -286,6 +288,10 @@ public class FilesManager {
         br.close();
         oldUsuaris.delete();
         reenombrarArxius(FILE_PATH_GAMES_BUYED_2,FILE_PATH_GAMES_BUYED);
+
+        if (!registre_trobat) {
+            guardarJocCompratTxt(g);
+        }
     }
     /**
      * Funció que reescriu el nom de l'arxiu secundari que creem a l'hora de modificar un usuari amb el nom de l'arxiu original.
@@ -308,6 +314,17 @@ public class FilesManager {
         while (s.hasNext()){
             String[] parts = s.next().split(":");
             list.add(new Joc(parts[0],parts[1],parts[2]));
+        }
+        s.close();
+        return list;
+    }
+
+    public static List<GamesBuyed> llegirTotsJocsComprats () throws FileNotFoundException {
+        Scanner s = new Scanner(new File(FILE_PATH_GAMES_BUYED));
+        List<GamesBuyed> list = new ArrayList<>();
+        while (s.hasNext()){
+            String[] parts = s.next().split(":");
+            list.add(new GamesBuyed(parts[0],parts[1],Integer.parseInt(parts[2]),Integer.parseInt(parts[3])));
         }
         s.close();
         return list;

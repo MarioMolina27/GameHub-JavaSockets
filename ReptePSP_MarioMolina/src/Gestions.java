@@ -1,10 +1,10 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.Key;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Gestions {
     /**
@@ -61,6 +61,7 @@ public class Gestions {
      * Funció que permet a l'usuari afegir o eliminar saldo del seu compte
      */
     public static Usuari modificarSaldo(Usuari u) {
+        System.out.println("El teu saldo actual es de "+u.getSaldo());
         System.out.print("Vols retirar o afegir saldo? (R/A)");
         char opcio = Keyboard.readChar();
         if (opcio == 'R' || opcio == 'r') {
@@ -182,7 +183,7 @@ public class Gestions {
 
     public static Usuari retirarSaldo(Usuari u) {
         System.out.print("Quant saldo vols retirar: ");
-        int saldoRetirar = Keyboard.readInt();
+        double saldoRetirar = Keyboard.readDouble();
         if (u.getSaldo() - saldoRetirar >= 0) {
             u.setSaldo(u.getSaldo() - saldoRetirar);
         } else {
@@ -193,8 +194,8 @@ public class Gestions {
 
     public static Usuari afegirSaldo(Usuari u) {
         System.out.print("Quant saldo vols afegir: ");
-        int nouSaldo = Keyboard.readInt();
-        if(nouSaldo<20)
+        double nouSaldo = Keyboard.readDouble();
+        if(nouSaldo<=20)
         {
             u.setSaldo(u.getSaldo()+nouSaldo);
             System.out.println("SALDO AFEGIT CORRECTAMENT");
@@ -216,14 +217,25 @@ public class Gestions {
         {
             System.out.println("Vols comprar la tarifa plana o una partida (P/TP)");
             String tipusCompra = Keyboard.readString().toLowerCase();
+            GamesBuyed game = Gestions.obtenirJocCompratConcret(u.getNomUsuari(),jocsDisponibles.get(joc).getNomJoc());
+            if(game == null)
+            {
+                game = new GamesBuyed();
+                game.setNomUsuari(u.getNomUsuari());
+                game.setNomJoc(jocsDisponibles.get(joc).getNomJoc());
+                game.setPartidesComprades(0);
+                game.setTarifaPlana(0);
+            }
+
             if(tipusCompra.equals("tp"))
             {
-                GamesBuyed game = new GamesBuyed(u.getNomUsuari(),jocsDisponibles.get(joc).getNomJoc());
-                int preu = getPreuJoc(game.getNomJoc(),jocsDisponibles);
+                int preu = jocsDisponibles.get(joc).getPreuJoc();
                 if(preu<u.getSaldo())
                 {
-                    FilesManager.guardarJocCompratTxt(game);
+                    game.setTarifaPlana(1);
+                    FilesManager.modificarTxtJocsComprats(game);
                     u.setSaldo(u.getSaldo() - preu);
+                    System.out.println("Joc comprat satisfactoriament");
                 }
                 else
                 {
@@ -232,7 +244,18 @@ public class Gestions {
             }
             else
             {
-
+                int preu = jocsDisponibles.get(joc).getPreuPartida();
+                if(preu<u.getSaldo())
+                {
+                    game.setPartidesComprades(game.getPartidesComprades()+1);
+                    FilesManager.modificarTxtJocsComprats(game);
+                    u.setSaldo(u.getSaldo() - preu);
+                    System.out.println("Joc comprat satisfactoriament");
+                }
+                else
+                {
+                    System.out.println("No tens prou salari");
+                }
             }
 
         }
@@ -246,7 +269,7 @@ public class Gestions {
     {
         for (int i = 0;i<jocs.size();i++)
         {
-            System.out.println(i+1+" - "+jocs.get(i).getNomJoc()+ " -> "+jocs.get(i).getPreuPartida()+ "TARIFA PLANA: "+jocs.get(i).getPreuJoc());
+            System.out.println(i+1+" - "+jocs.get(i).getNomJoc()+ " -> "+jocs.get(i).getPreuPartida()+ " TARIFA PLANA: "+jocs.get(i).getPreuJoc());
         }
     }
 
@@ -256,28 +279,19 @@ public class Gestions {
      * */
     public static List<Joc> retornarJocsDisponibles (List<Joc> jocs,List<GamesBuyed> jocsComprats)
     {
-        List<Joc> jocsDisponibles = new ArrayList<>();
-        List<String> nomsJocsCoincidents = new ArrayList<String>();
-        if(jocsComprats.size() != jocs.size())
-        {
-            for (GamesBuyed joc : jocsComprats) {
-                nomsJocsCoincidents.add(joc.getNomJoc());
-            }
+        //Filtrar la llista dels jocs comprats per l'usuari per una llista de strings els cuals tenen una tarifa plana comprada
+        Set<String> gamesWithTarifaPlana = jocsComprats.stream()
+                .filter(game -> game.getTarifaPlana() == 1)
+                .map(GamesBuyed::getNomJoc)
+                .collect(Collectors.toSet());
 
-            for (Joc joc : jocs) {
-                boolean coincidencia = false;
-                for (String nomJocCoincident : nomsJocsCoincidents) {
-                    if (joc.getNomJoc().equals(nomJocCoincident)) {
-                        coincidencia = true;
-                        break;
-                    }
-                }
-                if (!coincidencia) {
-                    jocsDisponibles.add(joc);
-                }
-            }
-        }
-        return jocsDisponibles;
+        // Filtrar la llista de jocs eliminant els jocs que tenen tarifa plana
+        List<Joc> juegosDisponibles = jocs.stream()
+                .filter(juego -> !gamesWithTarifaPlana.contains(juego.getNomJoc()))
+                .collect(Collectors.toList());
+
+        System.out.println("Juegos disponibles: " + juegosDisponibles);
+        return juegosDisponibles;
     }
 
     public static int getPreuJoc(String nomJoc,List<Joc> jocs)
@@ -292,5 +306,19 @@ public class Gestions {
             }
         }
         return preuJoc;
+    }
+
+    public static GamesBuyed obtenirJocCompratConcret(String nomUsuari,String nomJoc) throws FileNotFoundException {
+        List<GamesBuyed> jocsComprats = FilesManager.llegirTotsJocsComprats();
+        int i = 0;
+        GamesBuyed game = null;
+        while (i < jocsComprats.size() && game == null) {
+            GamesBuyed currentGame = jocsComprats.get(i);
+            if (currentGame.getNomUsuari().equals(nomUsuari) && currentGame.getNomJoc().equals(nomJoc)) {
+                game = currentGame;
+            }
+            i++;
+        }
+        return game;
     }
 }

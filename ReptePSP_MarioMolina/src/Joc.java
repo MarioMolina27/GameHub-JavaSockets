@@ -18,6 +18,6 @@ public class Joc {
     {
         this.nomJoc=nomJoc;
         this.preuJoc= Integer.parseInt(preuJoc);
-        this.preuJoc= Integer.parseInt(preuPartida);
+        this.preuPartida= Integer.parseInt(preuPartida);
     }
 }
