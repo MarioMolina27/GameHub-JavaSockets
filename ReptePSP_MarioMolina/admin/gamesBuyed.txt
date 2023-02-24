@@ -1,6 +1,4 @@
-mmolina:joc1
-
-mmolina:joc2
-mmolina:joc3
-prueba:joc1
-prueba:joc2
+mmolina:joc1:2:1
+mmolina:joc2:2:1
+mmolina:joc3:2:1
+prueba:joc1:0:0

@@ -71,7 +71,7 @@ public class Main {
                             System.out.println("ERROR - Opció de menú incorrecte");
                             break;
                     }
-                    FilesManager.modificarTXT(usuariActual);
+                    FilesManager.modificarTxtUsuari(usuariActual);
                 }while(continuar);
 
         }
@@ -95,7 +95,7 @@ public class Main {
      * @throws FileNotFoundException No es troba l'arxiu a la ruta seleccionada
      * @param usuari usuari actual que està jugant
      * */
-    public static void jugar(Usuari usuari) throws FileNotFoundException {
+    public static void jugar(Usuari usuari) throws IOException {
         List<GamesBuyed> jocsDisponibles = FilesManager.llegirJocsComprats(usuari.getNomUsuari());
 
         if(!jocsDisponibles.isEmpty())
@@ -105,11 +105,17 @@ public class Main {
             int opcio = Keyboard.readInt()-1;
             if(opcio >=0 && opcio < jocsDisponibles.size())
             {
-                System.out.println("Estas jugant a "+ jocsDisponibles.get(opcio).getNomJoc());
+                if(jocsDisponibles.get(opcio).getPartidesComprades()>0)
+                {
+                    System.out.println("Estas jugant a "+ jocsDisponibles.get(opcio).getNomJoc());
+                    GamesBuyed game = jocsDisponibles.get(opcio);
+                    game.setPartidesComprades(game.getPartidesComprades()-1);
+                    FilesManager.modificarTxtJocsComprats(jocsDisponibles.get(opcio));
+                }
             }
             else
             {
-                System.out.println("Opció de joc incorrecte");
+                System.out.println("No tens aquest joc disponible");
             }
         }
         else
@@ -132,7 +138,18 @@ public class Main {
     {
         for (int i = 0;i<jocs.size();i++)
         {
-            System.out.println(i+1+" - "+jocs.get(i).getNomJoc());
+            if(jocs.get(i).getTarifaPlana() == 0)
+            {
+                if(jocs.get(i).getPartidesComprades()>0)
+                {
+                    System.out.println(i+1+" - "+jocs.get(i).getNomJoc() + "  Partides disponibles: "+ jocs.get(i).getPartidesComprades());
+                }
+            }
+            else
+            {
+                System.out.println(i+1+" - "+jocs.get(i).getNomJoc() + "  Tens la Tarifa Plana");
+            }
+
         }
     }
 }

@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -213,16 +214,25 @@ public class Gestions {
         int joc = Keyboard.readInt()-1;
         if(joc >=0 && joc < jocsDisponibles.size())
         {
-            GamesBuyed game = new GamesBuyed(u.getNomUsuari(),jocsDisponibles.get(joc).getNomJoc());
-            int preu = getPreuJoc(game.getNomJoc(),jocsDisponibles);
-            if(preu<u.getSaldo())
+            System.out.println("Vols comprar la tarifa plana o una partida (P/TP)");
+            String tipusCompra = Keyboard.readString().toLowerCase();
+            if(tipusCompra.equals("tp"))
             {
-                FilesManager.guardarJocCompratTxt(game);
-                u.setSaldo(u.getSaldo() - preu);
+                GamesBuyed game = new GamesBuyed(u.getNomUsuari(),jocsDisponibles.get(joc).getNomJoc());
+                int preu = getPreuJoc(game.getNomJoc(),jocsDisponibles);
+                if(preu<u.getSaldo())
+                {
+                    FilesManager.guardarJocCompratTxt(game);
+                    u.setSaldo(u.getSaldo() - preu);
+                }
+                else
+                {
+                    System.out.println("No tens prou salari");
+                }
             }
             else
             {
-                System.out.println("No tens prou salari");
+
             }
 
         }
@@ -236,7 +246,7 @@ public class Gestions {
     {
         for (int i = 0;i<jocs.size();i++)
         {
-            System.out.println(i+1+" - "+jocs.get(i).getNomJoc()+ " -> "+jocs.get(i).getPreuJoc());
+            System.out.println(i+1+" - "+jocs.get(i).getNomJoc()+ " -> "+jocs.get(i).getPreuPartida()+ "TARIFA PLANA: "+jocs.get(i).getPreuJoc());
         }
     }
 

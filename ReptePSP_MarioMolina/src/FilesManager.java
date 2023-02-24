@@ -6,9 +6,10 @@ import java.util.Scanner;
 public class FilesManager {
 
     private static final String FILE_PATH_USERS = "admin\\users.txt";
-    public static final String FILE_PATH_2 = "admin\\users2.txt";
+    public static final String FILE_PATH_USERS_2 = "admin\\users2.txt";
     public static final String FILE_PATH_GAMES = "admin\\games.txt";
-    public static final String FILE_PATH_GAMES_BUYED = "admin\\GamesBuyed.txt";
+    public static final String FILE_PATH_GAMES_BUYED = "admin\\gamesBuyed.txt";
+    public static final String FILE_PATH_GAMES_BUYED_2 = "admin\\gamesBuyed2.txt";
     /**
      * Funció que guarda al final de l'arxiu txt l'usuari introduit per l'usuari
      * @param u objecte usuari a guardar
@@ -205,14 +206,14 @@ public class FilesManager {
      * @param u usuari a reescriure en el txt
      * @throws IOException Errors d'entrada o sortida de dades
      * */
-    public static void modificarTXT(Usuari u) throws IOException {
+    public static void modificarTxtUsuari(Usuari u) throws IOException {
         String stringUsuari = u.getNomUsuari()+":"+u.getNom()+":"+u.getCognoms()+":"+u.getEmail()+":"+u.getCompteCorrent()+":"+u.getPassword()+":"+u.getSaldo();
         int i, finalIndex;
         File oldUsuaris = new File(FILE_PATH_USERS);
         FileReader arxiu = new FileReader(FILE_PATH_USERS);
         BufferedReader br = new BufferedReader(arxiu);
 
-        FileWriter arxiu2 = new FileWriter(FILE_PATH_2);
+        FileWriter arxiu2 = new FileWriter(FILE_PATH_USERS_2);
         BufferedWriter bw = new BufferedWriter(arxiu2);
         String s = br.readLine();
         while(s!=null)
@@ -240,15 +241,59 @@ public class FilesManager {
         bw.close();
         br.close();
         oldUsuaris.delete();
-        reenombrarArxius();
+        reenombrarArxius(FILE_PATH_USERS_2,FILE_PATH_USERS);
+    }
+
+    public static void modificarTxtJocsComprats(GamesBuyed g) throws IOException {
+        String stringUsuari = g.getNomUsuari()+":"+g.getNomJoc()+":"+g.getPartidesComprades()+":"+g.getTarifaPlana();
+        int i, finalIndex,separador;
+        File oldUsuaris = new File(FILE_PATH_GAMES_BUYED);
+        FileReader arxiu = new FileReader(FILE_PATH_GAMES_BUYED);
+        BufferedReader br = new BufferedReader(arxiu);
+
+        FileWriter arxiu2 = new FileWriter(FILE_PATH_GAMES_BUYED_2);
+        BufferedWriter bw = new BufferedWriter(arxiu2);
+        String s = br.readLine();
+        while(s!=null)
+        {
+            finalIndex=-1;
+            separador = 0;
+            i=0;
+            do{
+                String chr = s.substring(i,i+1);
+                if(chr.equals(":")){
+                    separador++;
+                }
+                if(separador==2)
+                {
+                    finalIndex= i;
+                }
+                i++;
+            }while(i<s.length()&&finalIndex==-1);
+            String nomUsuariComprobar = s.substring(0,finalIndex);
+            String nomCoincidencia = g.getNomUsuari()+":"+g.getNomJoc();
+            if(!nomUsuariComprobar.equals(nomCoincidencia))
+            {
+                bw.write(s+"\n");
+            }
+            else
+            {
+                bw.write(stringUsuari+"\n");
+            }
+            s = br.readLine();
+        }
+        bw.close();
+        br.close();
+        oldUsuaris.delete();
+        reenombrarArxius(FILE_PATH_GAMES_BUYED_2,FILE_PATH_GAMES_BUYED);
     }
     /**
      * Funció que reescriu el nom de l'arxiu secundari que creem a l'hora de modificar un usuari amb el nom de l'arxiu original.
      * */
-    public static void reenombrarArxius()
+    public static void reenombrarArxius(String oldName, String newName)
     {
-        File oldfile = new File(FILE_PATH_2);
-        File newfile = new File(FILE_PATH_USERS);
+        File oldfile = new File(oldName);
+        File newfile = new File(newName);
         oldfile.renameTo(newfile);
     }
 
@@ -262,7 +307,7 @@ public class FilesManager {
         List<Joc> list = new ArrayList<>();
         while (s.hasNext()){
             String[] parts = s.next().split(":");
-            list.add(new Joc(parts[0],parts[1]));
+            list.add(new Joc(parts[0],parts[1],parts[2]));
         }
         s.close();
         return list;
@@ -274,7 +319,14 @@ public class FilesManager {
             String[] parts = s.next().split(":");
             if(parts[0].equals(nomUsuari))
             {
-                list.add(new GamesBuyed(parts[0],parts[1]));
+                if(Integer.parseInt(parts[3])==1)
+                {
+                    list.add(new GamesBuyed(parts[0],parts[1],Integer.parseInt(parts[2]),Integer.parseInt(parts[3])));
+                }
+                else if (Integer.parseInt(parts[2])>0)
+                {
+                    list.add(new GamesBuyed(parts[0],parts[1],Integer.parseInt(parts[2]),Integer.parseInt(parts[3])));
+                }
             }
         }
         s.close();
