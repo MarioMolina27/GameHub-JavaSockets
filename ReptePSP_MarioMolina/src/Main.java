@@ -11,7 +11,7 @@ public class Main {
             int opcio = Menus.mostrarMenuPrincipal();
             switch (opcio) {
                 case 1:
-                    u = Gestions.introduirDades(u);
+                    u = ModUsuaris.introduirDades(u);
                     if (u != null) {
                         FilesManager.guardarUsuariTxt(u);
                         System.out.printf("USUARI AFEGIT SATISFACTORIAMENT");
@@ -51,13 +51,13 @@ public class Main {
                             jugar(usuariActual);
                             break;
                         case 2:
-                            usuariActual = Gestions.gestionarJocs(usuariActual);
+                            usuariActual = ModUsuaris.gestionarJocs(usuariActual);
                             break;
                         case 3:
-                            usuariActual = Gestions.modificarSaldo(usuariActual);
+                            usuariActual = ModUsuaris.modificarSaldo(usuariActual);
                             break;
                         case 4:
-                            usuariActual = Gestions.modificarDadesUsuari(usuariActual);
+                            usuariActual = ModUsuaris.modificarDadesUsuari(usuariActual);
                             break;
                         case 0:
                             continuar=false;

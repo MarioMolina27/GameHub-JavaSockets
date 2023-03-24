@@ -16,7 +16,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="jBCrypt-0.4.1" level="project" />
-    <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
   </component>
 </module>

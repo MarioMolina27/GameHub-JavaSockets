@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class Gestions {
+public class ModUsuaris {
     /**
      * Funció que permet a l'usuari modificar les dades del seu usuari
      */
@@ -44,7 +44,7 @@ public class Gestions {
     public static Usuari gestionarJocs(Usuari u) throws IOException {
         List<Joc> jocs = FilesManager.llegirJocs();
         List<GamesBuyed> jocsComprats = FilesManager.llegirJocsComprats(u.getNomUsuari());
-        List<Joc> jocsDisponibles = Gestions.retornarJocsDisponibles (jocs,jocsComprats);
+        List<Joc> jocsDisponibles = ModUsuaris.retornarJocsDisponibles (jocs,jocsComprats);
         if(jocsDisponibles.size()>0)
         {
            comprarJoc(jocsDisponibles,u);
@@ -217,7 +217,7 @@ public class Gestions {
         {
             System.out.println("Vols comprar la tarifa plana o una partida (P/TP)");
             String tipusCompra = Keyboard.readString().toLowerCase();
-            GamesBuyed game = Gestions.obtenirJocCompratConcret(u.getNomUsuari(),jocsDisponibles.get(joc).getNomJoc());
+            GamesBuyed game = ModUsuaris.obtenirJocCompratConcret(u.getNomUsuari(),jocsDisponibles.get(joc).getNomJoc());
             if(game == null)
             {
                 game = new GamesBuyed();
@@ -292,20 +292,6 @@ public class Gestions {
 
         System.out.println("Juegos disponibles: " + juegosDisponibles);
         return juegosDisponibles;
-    }
-
-    public static int getPreuJoc(String nomJoc,List<Joc> jocs)
-    {
-        int preuJoc =0;
-        int i =0;
-        while(preuJoc ==0)
-        {
-            if(jocs.get(i).getNomJoc().equals(nomJoc))
-            {
-                preuJoc = jocs.get(i).getPreuJoc();
-            }
-        }
-        return preuJoc;
     }
 
     public static GamesBuyed obtenirJocCompratConcret(String nomUsuari,String nomJoc) throws FileNotFoundException {
