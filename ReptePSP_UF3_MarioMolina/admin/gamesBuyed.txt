@@ -1,0 +1,8 @@
+mmolina:joc1:2:1
+mmolina:joc2:2:1
+mmolina:joc3:2:1
+prueba:joc1:0:1
+prueba:joc2:0:1
+prueba:joc3:0:0
+1:joc1:0:1
+1:joc2:0:0

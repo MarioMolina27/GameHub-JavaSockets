@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <EditText
+        android:id="@+id/edtTxtUsuari"
+        android:layout_width="308dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_marginTop="100dp"
+        android:text="jlgarcia@politecnics.barcelona"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/edtTxtContrasenya"
+        android:layout_width="308dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:text="jl"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtTxtUsuari" />
+
+    <TextView
+        android:id="@+id/btnNewUsuari"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Crear un nou compte"
+        android:textColor="@color/purple_200"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/edtTxtContrasenya"/>
+
+    <Button
+        android:id="@+id/btnIniciSessio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="80dp"
+        android:text="Iniciar Sessió"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
