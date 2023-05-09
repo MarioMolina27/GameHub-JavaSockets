@@ -74,6 +74,11 @@ public class Main {
                             break;
                         case 3, 4:
                             usuariActual = client.rebreUsuari();
+                            int modPass = client.recieveInt();
+                            if(modPass == 1)
+                            {
+                                usuariActual.setPassword(Blowfish.Encrypt(usuariActual.getPassword()));
+                            }
                             break;
                         case 0:
                             continuar=false;

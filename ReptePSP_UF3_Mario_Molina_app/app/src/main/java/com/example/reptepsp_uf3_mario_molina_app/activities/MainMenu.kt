@@ -23,6 +23,7 @@ class MainMenu : AppCompatActivity() {
         {
             if (it.resultCode == RESULT_OK)
             {
+                val modPass = it.data?.getIntExtra(Keys.constKeys.MOD_PASSWORD,0)
                 val usuariActual = it.data?.getSerializableExtra(Keys.constKeys.TO_MAIN) as Usuari
                 val mod = it.data?.getStringExtra(Keys.constKeys.TO_MAIN_EXTRA)
                 if(mod.equals("mod"))
@@ -30,6 +31,15 @@ class MainMenu : AppCompatActivity() {
                     val executor = Executors.newSingleThreadExecutor()
                     executor.execute {
                         MainActivity.serverConnect.socket.enviarUsuari(usuariActual)
+                        if (modPass==0)
+                        {
+                            MainActivity.serverConnect.socket.sendInt(0)
+                        }
+                        else
+                        {
+                            MainActivity.serverConnect.socket.sendInt(1)
+                        }
+
                     }
                 }
             }

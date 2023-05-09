@@ -68,6 +68,7 @@ class RegisterUsuari : AppCompatActivity() {
                     else
                     {
                         usuari.password = edtTextNewPassword.text.toString()
+                        intent.putExtra(Keys.constKeys.MOD_PASSWORD, 1)
                     }
                     intent.putExtra(Keys.constKeys.TO_MAIN, usuari)
                     intent.putExtra(Keys.constKeys.TO_MAIN_EXTRA, "mod")
