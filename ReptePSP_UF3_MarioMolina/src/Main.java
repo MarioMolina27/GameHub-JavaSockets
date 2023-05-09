@@ -11,26 +11,20 @@ public class Main {
         MySocket client = new MySocket(new Socket());
         try
         {
+            System.out.println("Esperant la nova conexió del client");
+            client.accept(server);
+            System.out.println("Client conectat");
             boolean continuar = true;
             Usuari u = new Usuari();
             do {
-                System.out.println("Esperant la nova conexió del client");
-                client.accept(server);
-                System.out.println("Client conectat");
                 int opcio = client.recieveInt();
                 switch (opcio) {
                     case 1:
-                        client.close();
-                        System.out.println("Esperant la nova conexió del client");
-                        client.accept(server);
-                        System.out.println("Client conectat");
-
                         u = ModUsuaris.introduirDades(u,client);
                         if (u != null) {
                             FilesManager.guardarUsuariTxt(u);
                             System.out.printf("USUARI AFEGIT SATISFACTORIAMENT");
                         }
-                        client.close();
                         espaiarElements(5);
                         break;
                     case 2:
@@ -38,7 +32,6 @@ public class Main {
                         String password = client.recieveString();
                         accedir(client,usuari,password);
                         espaiarElements(5);
-                        client.close();
                         break;
                     case 0:
                         continuar=false;

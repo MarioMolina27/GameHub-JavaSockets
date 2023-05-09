@@ -1,25 +1,24 @@
-package com.example.reptepsp_uf3_mario_molina_app
+package com.example.reptepsp_uf3_mario_molina_app.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.system.Os.socket
 import android.widget.Button
-import android.widget.Toast
+import com.example.reptepsp_uf3_mario_molina_app.Keys
+import com.example.reptepsp_uf3_mario_molina_app.sockets.MySocket
+import com.example.reptepsp_uf3_mario_molina_app.R
+import com.example.reptepsp_uf3_mario_molina_app.Usuari
+import com.example.reptepsp_uf3_mario_molina_app.sockets.MySocketSerializable
 import com.google.android.material.textfield.TextInputEditText
 import java.net.Socket
 import java.util.concurrent.Executors
 
 class RegisterUsuari : AppCompatActivity() {
-    private lateinit var socket: MySocket
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_usuari)
 
-        val executor = Executors.newSingleThreadExecutor()
-        executor.execute{
-            val ip = "192.168.1.44"
-            socket = MySocket(Socket(ip, MySocket.PORT))
-        }
 
         val usuari = Usuari()
         val edtTextNewUsuari = findViewById<TextInputEditText>(R.id.edtTextNewUsuari)
@@ -41,11 +40,9 @@ class RegisterUsuari : AppCompatActivity() {
             usuari.password = edtTextNewPassword.text.toString()
             val executor = Executors.newSingleThreadExecutor()
             executor.execute{
-                socket.sendString(edtTextNewPassword2.text.toString())
-                socket.enviarUsuari(usuari)
-                socket.close()
-                val intent = Intent(this,MainActivity::class.java)
-                startActivity(intent)
+                MainActivity.serverConnect.socket.sendString(edtTextNewPassword2.text.toString())
+                MainActivity.serverConnect.socket.enviarUsuari(usuari)
+                finish()
                 }
             }
         }
