@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewSaldo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saldo actual: "
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextSaldo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAddSaldo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSaldo" />
+
+    <Button
+        android:id="@+id/buttonAddSaldo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Afegir Saldo"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSubtractSaldo"
+        app:layout_constraintEnd_toStartOf="@+id/buttonExitSaldo"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSaldo" />
+
+    <Button
+        android:id="@+id/buttonSubtractSaldo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Restar Saldo"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonExitSaldo"
+        app:layout_constraintEnd_toStartOf="@+id/buttonExitSaldo"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddSaldo" />
+
+    <Button
+        android:id="@+id/buttonExitSaldo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sortir"
+        android:layout_marginRight="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonSubtractSaldo"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSubtractSaldo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,20 +6,16 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.reptepsp_uf3_mario_molina_app.Keys
 import com.example.reptepsp_uf3_mario_molina_app.sockets.MySocket
 import com.example.reptepsp_uf3_mario_molina_app.R
+import com.example.reptepsp_uf3_mario_molina_app.datamodels.Keys
 import com.example.reptepsp_uf3_mario_molina_app.sockets.MySocket.PORT
-import com.example.reptepsp_uf3_mario_molina_app.sockets.MySocketSerializable
 import java.net.Socket
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
-
-
     object serverConnect
     {
-
         lateinit var socket: MySocket
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +54,7 @@ class MainActivity : AppCompatActivity() {
                 val usuariActual = serverConnect.socket.rebreUsuari()
                 if (!usuariActual.getNomUsuari().equals("null")) {
                     val intent = Intent(this, MainMenu::class.java)
+                    intent.putExtra(Keys.constKeys.LOGIN,usuariActual)
                     startActivity(intent)
                 }
             }

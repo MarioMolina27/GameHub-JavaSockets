@@ -1,8 +1,6 @@
 package com.example.reptepsp_uf3_mario_molina_app.sockets;
 
-import android.os.Parcelable;
-
-import com.example.reptepsp_uf3_mario_molina_app.Usuari;
+import com.example.reptepsp_uf3_mario_molina_app.datamodels.Usuari;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -11,7 +9,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 

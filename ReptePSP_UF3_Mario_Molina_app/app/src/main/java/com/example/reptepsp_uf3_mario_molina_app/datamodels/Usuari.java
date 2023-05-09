@@ -1,4 +1,4 @@
-package com.example.reptepsp_uf3_mario_molina_app;
+package com.example.reptepsp_uf3_mario_molina_app.datamodels;
 
 import java.io.FileNotFoundException;
 import java.io.Serializable;

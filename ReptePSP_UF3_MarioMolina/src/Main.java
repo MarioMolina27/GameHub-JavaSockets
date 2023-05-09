@@ -63,7 +63,8 @@ public class Main {
                 boolean continuar = true;
                 do
                 {
-                    int opcio = Menus.mostrarMenuAplicacio();
+                    System.out.println("Usuari escollint la nova opció");
+                    int opcio = client.recieveInt();
                     switch (opcio) {
                         case 1:
                             jugar(usuariActual);
@@ -71,11 +72,8 @@ public class Main {
                         case 2:
                             usuariActual = ModUsuaris.gestionarJocs(usuariActual);
                             break;
-                        case 3:
-                            usuariActual = ModUsuaris.modificarSaldo(usuariActual);
-                            break;
-                        case 4:
-                            usuariActual = ModUsuaris.modificarDadesUsuari(usuariActual);
+                        case 3, 4:
+                            usuariActual = client.rebreUsuari();
                             break;
                         case 0:
                             continuar=false;
@@ -86,6 +84,7 @@ public class Main {
                             break;
                     }
                     FilesManager.modificarTxtUsuari(usuariActual);
+                    System.out.println("Usuari modificat correctament");
                 }while(continuar);
 
         }
