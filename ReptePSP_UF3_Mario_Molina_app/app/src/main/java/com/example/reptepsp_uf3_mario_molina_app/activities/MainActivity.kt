@@ -11,6 +11,8 @@ import com.example.reptepsp_uf3_mario_molina_app.sockets.MySocket
 import com.example.reptepsp_uf3_mario_molina_app.R
 import com.example.reptepsp_uf3_mario_molina_app.datamodels.Keys
 import com.example.reptepsp_uf3_mario_molina_app.sockets.MySocket.PORT
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import java.net.Socket
 import java.util.concurrent.Executors
 
@@ -22,8 +24,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val edtTxtUsuari = findViewById<EditText>(R.id.edtTxtUsuari)
-        val edtTxtContrasenya = findViewById<EditText>(R.id.edtTxtContrasenya)
+        val edtTxtUsuari = findViewById<TextInputEditText>(R.id.edtTxtUsuari)
+        val edtTxtContrasenya = findViewById<TextInputEditText>(R.id.edtTxtContrasenya)
         val txtNewUser = findViewById<TextView>(R.id.btnNewUsuari)
         val btnIniciSessio = findViewById<Button>(R.id.btnIniciSessio)
 

@@ -4,33 +4,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F2F2F2">
 
+    <ImageView
+        android:id="@+id/imgLogin"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/loginimage"/>
 
-
-    <EditText
-        android:id="@+id/edtTxtUsuari"
-        android:layout_width="308dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:layout_marginTop="100dp"
-        android:text="prueba"
+        android:layout_marginHorizontal="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <EditText
-        android:id="@+id/edtTxtContrasenya"
-        android:layout_width="308dp"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
+       app:layout_constraintTop_toBottomOf="@+id/imgLogin"
+        android:layout_marginTop="10dp"
         android:maxLines="1"
-        android:text="2"
-        android:layout_marginTop="40dp"
+        android:hint="Nom Usuari"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtTxtUsuari"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtTxtUsuari" />
+        android:layout_marginHorizontal="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField"
+        android:maxLines="1"
+        android:hint="Contrasenya"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtTxtContrasenya"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <TextView
         android:id="@+id/btnNewUsuari"
@@ -38,22 +64,23 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="Crear un nou compte"
-        android:textColor="@color/purple_200"
+        android:text="NOU COMPTE?"
+        android:textColor="#009c86"
         android:textStyle="bold"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/edtTxtContrasenya"/>
+        app:layout_constraintTop_toBottomOf="@+id/btnIniciSessio"/>
 
     <Button
         android:id="@+id/btnIniciSessio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="80dp"
         android:text="Iniciar Sessió"
-    />
+        style="@style/buttons"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
