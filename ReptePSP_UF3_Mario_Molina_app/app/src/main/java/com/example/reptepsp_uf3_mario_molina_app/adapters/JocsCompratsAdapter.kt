@@ -35,12 +35,13 @@ class JocsCompratsAdapter(context: Context, val layout: Int, val games: MutableL
         txtNomJocComprat.text = game.nomJoc
         if(game.tarifaPlana==0)
         {
-            txtTarifaPlana.text = "Tarifa plana: NO"
+            txtTarifaPlana.visibility = View.GONE
             txtNumPartides.text = "Partides disponibles: "+game.partidesComprades
             txtNumPartides.visibility = View.VISIBLE
         }
         if(game.tarifaPlana==1)
         {
+            txtTarifaPlana.visibility = View.VISIBLE
             txtTarifaPlana.text = "Tarifa plana: SI"
             txtNumPartides.visibility = View.GONE
         }

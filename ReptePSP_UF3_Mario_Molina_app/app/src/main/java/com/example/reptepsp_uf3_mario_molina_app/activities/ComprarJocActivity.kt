@@ -80,6 +80,10 @@ class ComprarJocActivity : AppCompatActivity() {
                             runOnUiThread {
                                 Toast.makeText(this@ComprarJocActivity, msg, Toast.LENGTH_SHORT).show()
                             }
+                            usuariActual = MainActivity.serverConnect.socket.rebreUsuari()
+                            intent.putExtra(Keys.constKeys.TO_MAIN, usuariActual)
+                            intent.putExtra(Keys.constKeys.TO_MAIN_EXTRA, "mod_local")
+                            setResult(RESULT_OK,intent)
                             finish()
                         }
                     }
@@ -91,6 +95,10 @@ class ComprarJocActivity : AppCompatActivity() {
                             runOnUiThread {
                                 Toast.makeText(this@ComprarJocActivity, msg, Toast.LENGTH_SHORT).show()
                             }
+                            usuariActual = MainActivity.serverConnect.socket.rebreUsuari()
+                            intent.putExtra(Keys.constKeys.TO_MAIN, usuariActual)
+                            intent.putExtra(Keys.constKeys.TO_MAIN_EXTRA, "mod_local")
+                            setResult(RESULT_OK,intent)
                             finish()
                         }
                     }

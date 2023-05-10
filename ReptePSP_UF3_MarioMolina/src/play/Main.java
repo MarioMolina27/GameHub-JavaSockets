@@ -78,6 +78,7 @@ public class Main {
                             break;
                         case 2:
                             usuariActual = ModUsuaris.gestionarJocs(usuariActual,client);
+                            client.enviarUsuari(usuariActual);
                             break;
                         case 3, 4:
                             usuariActual = client.rebreUsuari();

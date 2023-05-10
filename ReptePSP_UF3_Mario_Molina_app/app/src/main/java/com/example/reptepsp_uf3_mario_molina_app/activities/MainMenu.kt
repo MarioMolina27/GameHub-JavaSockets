@@ -89,7 +89,7 @@ class MainMenu : AppCompatActivity() {
                         MainActivity.serverConnect.socket.sendInt(2)
                         val intent = Intent(this,ComprarJocActivity::class.java)
                         intent.putExtra(Keys.constKeys.TO_COMPRAR,usuariActual)
-                        startActivity(intent)
+                        getResult.launch(intent)
                     }
                 }
                 2 -> {
