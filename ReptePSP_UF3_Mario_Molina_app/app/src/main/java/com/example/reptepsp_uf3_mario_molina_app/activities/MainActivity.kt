@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.reptepsp_uf3_mario_molina_app.sockets.MySocket
 import com.example.reptepsp_uf3_mario_molina_app.R
@@ -56,6 +57,12 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, MainMenu::class.java)
                     intent.putExtra(Keys.constKeys.LOGIN,usuariActual)
                     startActivity(intent)
+                }
+                else
+                {
+                    runOnUiThread{
+                        Toast.makeText(this@MainActivity, "Aquest usuari no existeix o la contrasenya es incorrecte", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
 

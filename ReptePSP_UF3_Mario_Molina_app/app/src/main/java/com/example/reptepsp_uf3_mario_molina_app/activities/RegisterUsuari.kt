@@ -56,6 +56,10 @@ class RegisterUsuari : AppCompatActivity() {
                     executor.execute{
                         MainActivity.serverConnect.socket.sendString(edtTextNewPassword2.text.toString())
                         MainActivity.serverConnect.socket.enviarUsuari(usuari)
+                        val msg = MainActivity.serverConnect.socket.recieveString()
+                        runOnUiThread {
+                            Toast.makeText(this@RegisterUsuari, msg, Toast.LENGTH_SHORT).show()
+                        }
                         finish()
                     }
                 }

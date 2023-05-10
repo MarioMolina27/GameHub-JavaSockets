@@ -179,6 +179,7 @@ public class ModUsuaris {
             msg = "ERROR - El format del IBAN es incorrecte";
             System.out.println(msg);
         }
+        client.sendString(msg);
         return  u;
     }
     public static Usuari demanarDades(Usuari u) {
