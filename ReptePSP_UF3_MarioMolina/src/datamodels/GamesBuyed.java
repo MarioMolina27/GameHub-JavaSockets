@@ -1,3 +1,5 @@
+package datamodels;
+
 public class GamesBuyed {
     private String nomUsuari;
     private String nomJoc;

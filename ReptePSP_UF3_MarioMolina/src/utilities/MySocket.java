@@ -1,3 +1,8 @@
+package utilities;
+
+import datamodels.GamesBuyed;
+import datamodels.Usuari;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;

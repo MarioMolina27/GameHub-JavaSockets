@@ -1,4 +1,13 @@
-import javax.print.DocFlavor;
+package play;
+
+import datamodels.GamesBuyed;
+import datamodels.Joc;
+import datamodels.Usuari;
+import utilities.Blowfish;
+import utilities.Keyboard;
+import utilities.Menus;
+import utilities.MySocket;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -39,7 +48,7 @@ public class ModUsuaris {
 
     /**
      * Funció que permet a l'usuari comprar jocs
-     * @return Usuari modificat
+     * @return datamodels.Usuari modificat
      * @throws FileNotFoundException No es troba l'arxiu a la ruta seleccionada
      * */
     public static Usuari gestionarJocs(Usuari u) throws IOException {
@@ -134,7 +143,7 @@ public class ModUsuaris {
         return matcher.matches();
     }
 
-    public static Usuari introduirDades(Usuari u,MySocket client) throws Exception {
+    public static Usuari introduirDades(Usuari u, MySocket client) throws Exception {
         String passwordR = client.recieveString();
         String msg = "";
         u = client.rebreUsuari();
@@ -242,7 +251,7 @@ public class ModUsuaris {
                     game.setTarifaPlana(1);
                     FilesManager.modificarTxtJocsComprats(game);
                     u.setSaldo(u.getSaldo() - preu);
-                    System.out.println("Joc comprat satisfactoriament");
+                    System.out.println("datamodels.Joc comprat satisfactoriament");
                 }
                 else
                 {
@@ -257,7 +266,7 @@ public class ModUsuaris {
                     game.setPartidesComprades(game.getPartidesComprades()+1);
                     FilesManager.modificarTxtJocsComprats(game);
                     u.setSaldo(u.getSaldo() - preu);
-                    System.out.println("Joc comprat satisfactoriament");
+                    System.out.println("datamodels.Joc comprat satisfactoriament");
                 }
                 else
                 {

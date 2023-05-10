@@ -1,3 +1,5 @@
+package utilities;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.FileNotFoundException;
@@ -5,7 +7,7 @@ import java.io.FileNotFoundException;
 public class Blowfish {
     private static final int workload = 10;
     /**
-     * Funció que encripta una contrasenya en Blowfish
+     * Funció que encripta una contrasenya en utilities.Blowfish
      * @param password_plaintext contrasenya introduida per l'usuari
      * @return contrasenya encriptada
      * */

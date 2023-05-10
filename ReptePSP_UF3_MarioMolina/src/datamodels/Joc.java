@@ -1,3 +1,5 @@
+package datamodels;
+
 public class Joc {
     private String nomJoc;
     private int preuJoc;

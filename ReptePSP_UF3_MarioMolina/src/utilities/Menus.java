@@ -1,3 +1,7 @@
+package utilities;
+
+import utilities.Keyboard;
+
 public class Menus {
     public static int mostrarMenuModDades (){
         System.out.println("Quina dada vols modificar: ");

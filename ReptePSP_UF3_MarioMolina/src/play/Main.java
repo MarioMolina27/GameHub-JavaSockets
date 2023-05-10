@@ -1,3 +1,10 @@
+package play;
+
+import datamodels.GamesBuyed;
+import datamodels.Usuari;
+import utilities.Blowfish;
+import utilities.MySocket;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -63,7 +70,7 @@ public class Main {
                 boolean continuar = true;
                 do
                 {
-                    System.out.println("Usuari escollint la nova opció");
+                    System.out.println("datamodels.Usuari escollint la nova opció");
                     int opcio = client.recieveInt();
                     switch (opcio) {
                         case 1:

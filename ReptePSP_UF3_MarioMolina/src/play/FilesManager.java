@@ -1,3 +1,10 @@
+package play;
+
+import datamodels.GamesBuyed;
+import datamodels.Joc;
+import datamodels.Usuari;
+import utilities.Blowfish;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,9 +140,9 @@ public class FilesManager {
     }
 
     /**
-     * Funció que busca a l'arxiu txt un usuari concret i te'l retorna com un objecte Usuari
+     * Funció que busca a l'arxiu txt un usuari concret i te'l retorna com un objecte datamodels.Usuari
      * @param usuari nom de l'usuari que s'ha de retornar
-     * @return objecte Usuari
+     * @return objecte datamodels.Usuari
      * */
     public static Usuari buscarUsuariTxt(String usuari,String password)
     {
@@ -192,7 +199,7 @@ public class FilesManager {
     }
     /**
      * Funció que agafa tots els camps de l'string complet de l'usuari i crea un objecte amb aquestes dades
-     * @return Usuari
+     * @return datamodels.Usuari
      * @param stringUsuari string amb totes les dades de l'usuari
      * */
     public static Usuari retornarObjecteUsuari(String stringUsuari)
