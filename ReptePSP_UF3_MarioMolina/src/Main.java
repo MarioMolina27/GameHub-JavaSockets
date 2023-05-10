@@ -67,7 +67,7 @@ public class Main {
                     int opcio = client.recieveInt();
                     switch (opcio) {
                         case 1:
-                            jugar(usuariActual);
+                            jugar(usuariActual,client);
                             break;
                         case 2:
                             usuariActual = ModUsuaris.gestionarJocs(usuariActual);
@@ -89,7 +89,6 @@ public class Main {
                             break;
                     }
                     FilesManager.modificarTxtUsuari(usuariActual);
-                    System.out.println("Usuari modificat correctament");
                 }while(continuar);
 
         }
@@ -108,22 +107,38 @@ public class Main {
      * @throws FileNotFoundException No es troba l'arxiu a la ruta seleccionada
      * @param usuari usuari actual que està jugant
      * */
-    public static void jugar(Usuari usuari) throws IOException {
+    public static void jugar(Usuari usuari,MySocket client) throws Exception {
         List<GamesBuyed> jocsDisponibles = FilesManager.llegirJocsComprats(usuari.getNomUsuari());
+
+        int llistaAmbElements = jocsDisponibles.isEmpty() ? 0 : 1;
+        client.sendInt(llistaAmbElements);
 
         if(!jocsDisponibles.isEmpty())
         {
-            mostrarLlistaJocs(jocsDisponibles);
-            System.out.print("Opció: ");
-            int opcio = Keyboard.readInt()-1;
+            client.sendInt(jocsDisponibles.size());
+            for (GamesBuyed joc:jocsDisponibles)
+            {
+                client.enviarJocComprat(joc);
+            }
+            int opcio = client.recieveInt();
             if(opcio >=0 && opcio < jocsDisponibles.size())
             {
-                if(jocsDisponibles.get(opcio).getPartidesComprades()>0)
+                if(jocsDisponibles.get(opcio).getPartidesComprades()>0||jocsDisponibles.get(opcio).getTarifaPlana()==1)
                 {
-                    System.out.println("Estas jugant a "+ jocsDisponibles.get(opcio).getNomJoc());
+                    String msg = "Estas jugant a "+ jocsDisponibles.get(opcio).getNomJoc();
+                    System.out.println(msg);
                     GamesBuyed game = jocsDisponibles.get(opcio);
-                    game.setPartidesComprades(game.getPartidesComprades()-1);
+                    if(game.getPartidesComprades()>0)
+                    {
+                        game.setPartidesComprades(game.getPartidesComprades()-1);
+                    }
                     FilesManager.modificarTxtJocsComprats(jocsDisponibles.get(opcio));
+                    client.sendString(msg);
+                }
+                else
+                {
+                    String msg = "No pots jugar a aquest joc";
+                    client.sendString(msg);
                 }
             }
             else

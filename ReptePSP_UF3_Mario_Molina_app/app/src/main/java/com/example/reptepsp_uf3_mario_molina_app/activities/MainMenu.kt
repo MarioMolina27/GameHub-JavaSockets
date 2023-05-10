@@ -73,6 +73,9 @@ class MainMenu : AppCompatActivity() {
                     val executor = Executors.newSingleThreadExecutor()
                     executor.execute {
                         MainActivity.serverConnect.socket.sendInt(1)
+                        val intent = Intent(this,JugantActivity::class.java)
+                        intent.putExtra(Keys.constKeys.TO_JUGAR,usuariActual)
+                        startActivity(intent)
                     }
                 }
                 1 -> {
@@ -104,6 +107,7 @@ class MainMenu : AppCompatActivity() {
                     val executor = Executors.newSingleThreadExecutor()
                     executor.execute {
                         MainActivity.serverConnect.socket.sendInt(0)
+                        finish()
                     }
                 }
             }

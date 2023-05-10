@@ -100,4 +100,32 @@ public class MySocket implements Serializable {
             throw e;
         }
     }
+
+    public GamesBuyed rebreJocComptat() {
+        GamesBuyed joc = new GamesBuyed();
+        try {
+            InputStream is = socket.getInputStream();
+            ObjectInputStream ois = new ObjectInputStream(is);
+            String usuariString = (String )ois.readObject();
+            String[] parts = usuariString.split(":");
+            joc = new GamesBuyed(parts[0],parts[1],Integer.parseInt(parts[2]),Integer.parseInt(parts[3]));
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return joc;
+    }
+
+    public void enviarJocComprat(GamesBuyed g) throws IOException {
+        try
+        {
+            String game = g.getNomUsuari()+":"+g.getNomJoc()+":"+g.getPartidesComprades()+":"+g.getTarifaPlana();
+            OutputStream os = socket.getOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(os);
+            oos.writeObject(game);
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+    }
 }
