@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.RegisterUsuari">
+    tools:context=".activities.RegisterUsuari"
+    android:background="#F2F2F2">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nom d'usuari"
-        android:layout_marginTop="80dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -28,8 +31,10 @@
         android:layout_height="wrap_content"
         android:hint="Nom"
         android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username_layout">
+        app:layout_constraintTop_toBottomOf="@+id/username_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtTextNewName"
@@ -44,8 +49,10 @@
         android:layout_height="wrap_content"
         android:hint="Cognoms"
         android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_layout">
+        app:layout_constraintTop_toBottomOf="@+id/name_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtTextNewCognoms"
@@ -60,8 +67,10 @@
         android:layout_height="wrap_content"
         android:hint="Compte Corrent"
         android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cognoms_layout">
+        app:layout_constraintTop_toBottomOf="@+id/cognoms_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtTextNewCompteCorrent"
@@ -76,8 +85,10 @@
         android:layout_height="wrap_content"
         android:hint="Email"
         android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/compte_layout">
+        app:layout_constraintTop_toBottomOf="@+id/compte_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtTextNewEmail"
@@ -93,7 +104,9 @@
         android:hint="Contrasenya"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_layout">
+        android:layout_marginHorizontal="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/email_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtTextNewPassword"
@@ -109,7 +122,9 @@
         android:hint="Repeteix la contrasenya"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_layout">
+        android:layout_marginHorizontal="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/password_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtTextNewPassword2"
@@ -126,8 +141,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="40dp"
-        android:text="Acceptar"/>
+        android:layout_marginBottom="25dp"
+        android:text="Aceptar"
+        style="@style/buttons"/>
 
 
 

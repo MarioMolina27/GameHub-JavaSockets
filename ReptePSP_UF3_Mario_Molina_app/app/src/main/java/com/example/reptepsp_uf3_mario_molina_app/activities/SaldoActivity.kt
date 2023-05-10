@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.example.reptepsp_uf3_mario_molina_app.R
 import com.example.reptepsp_uf3_mario_molina_app.datamodels.Keys
 import com.example.reptepsp_uf3_mario_molina_app.datamodels.Usuari
+import com.google.android.material.textfield.TextInputEditText
 
 class SaldoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,21 +20,21 @@ class SaldoActivity : AppCompatActivity() {
         val usuariActual = intent.getSerializableExtra(Keys.constKeys.SALDO) as Usuari
 
         val textViewSaldo = findViewById<TextView>(R.id.textViewSaldo)
-        val editTextSaldo = findViewById<EditText>(R.id.editTextSaldo)
+        val editTextSaldo = findViewById<TextInputEditText>(R.id.edtTextNewSaldo)
         val buttonAddSaldo = findViewById<Button>(R.id.buttonAddSaldo)
         val buttonSubtractSaldo = findViewById<Button>(R.id.buttonSubtractSaldo)
         val buttonExitSaldo = findViewById<Button>(R.id.buttonExitSaldo)
 
-        textViewSaldo.text =  usuariActual.saldo.toString()
+        textViewSaldo.text =  String.format("%.2f", usuariActual.saldo)
 
         buttonSubtractSaldo.setOnClickListener()
         {
-            if(!editTextSaldo.text.equals(""))
+            if(!editTextSaldo.text?.equals("")!!)
             {
                 if(usuariActual.saldo - editTextSaldo.text.toString().toDouble()>0)
                 {
                     usuariActual.saldo = usuariActual.saldo - editTextSaldo.text.toString().toDouble()
-                    textViewSaldo.text =  usuariActual.saldo.toString()
+                    textViewSaldo.text =  String.format("%.2f", usuariActual.saldo)
                     Toast.makeText(this, "Saldo retirat correctament", Toast.LENGTH_SHORT).show()
                 }
                 else
@@ -44,12 +45,12 @@ class SaldoActivity : AppCompatActivity() {
         }
         buttonAddSaldo.setOnClickListener()
         {
-            if(!editTextSaldo.text.equals(""))
+            if(!editTextSaldo.text?.equals("")!!)
             {
                 if(editTextSaldo.text.toString().toDouble()<=20)
                 {
                     usuariActual.saldo = usuariActual.saldo + editTextSaldo.text.toString().toDouble()
-                    textViewSaldo.text =  usuariActual.saldo.toString()
+                    textViewSaldo.text =  String.format("%.2f", usuariActual.saldo)
                     Toast.makeText(this, "Saldo afegit correctament", Toast.LENGTH_SHORT).show()
                 }
                 else

@@ -2,29 +2,49 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F2F2F2">
+
+    <ImageView
+        android:id="@+id/imgCoinSaldo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/coin"
+        android:layout_marginTop="15dp"
+        app:layout_constraintRight_toLeftOf="@+id/textViewSaldo"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewSaldo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Saldo actual: "
-        android:textSize="18sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="22dp"
+        android:text="18"
+        android:fontFamily="@font/visitor1"
+        android:layout_marginRight="30dp"
+        android:textSize="40sp"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/imgCoinSaldo"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextSaldo"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/saldo_mod_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAddSaldo"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:hint="Saldo"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSaldo" />
+        app:layout_constraintTop_toBottomOf="@+id/imgCoinSaldo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtTextNewSaldo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/buttonAddSaldo"
@@ -36,7 +56,8 @@
         app:layout_constraintEnd_toStartOf="@+id/buttonExitSaldo"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSaldo" />
+        app:layout_constraintTop_toBottomOf="@+id/saldo_mod_layout"
+        style="@style/buttons"/>
 
     <Button
         android:id="@+id/buttonSubtractSaldo"
@@ -48,7 +69,8 @@
         app:layout_constraintEnd_toStartOf="@+id/buttonExitSaldo"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddSaldo" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddSaldo"
+        style="@style/buttons"/>
 
     <Button
         android:id="@+id/buttonExitSaldo"
@@ -59,6 +81,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonSubtractSaldo"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSubtractSaldo" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonSubtractSaldo"
+        style="@style/buttons"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

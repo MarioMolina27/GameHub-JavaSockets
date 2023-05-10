@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         val btnIniciSessio = findViewById<Button>(R.id.btnIniciSessio)
 
 
-        val ip = "192.168.50.63"
+        val ip = "192.168.1.132"
         val executor = Executors.newSingleThreadExecutor()
         executor.execute {
             serverConnect.socket = MySocket(

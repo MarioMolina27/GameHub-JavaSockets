@@ -21,7 +21,7 @@
         android:layout_marginHorizontal="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@+id/imgLogin"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogin"
         android:layout_marginTop="10dp"
         android:maxLines="1"
         android:hint="Nom Usuari"
@@ -55,8 +55,6 @@
             android:layout_height="wrap_content"
             />
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
     <TextView
         android:id="@+id/btnNewUsuari"
