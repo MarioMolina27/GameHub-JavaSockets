@@ -35,11 +35,11 @@ class SaldoActivity : AppCompatActivity() {
                 {
                     usuariActual.saldo = usuariActual.saldo - editTextSaldo.text.toString().toDouble()
                     textViewSaldo.text =  String.format("%.2f", usuariActual.saldo)
-                    Toast.makeText(this, "Saldo retirat correctament", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Saldo retirat correctament", Toast.LENGTH_LONG).show()
                 }
                 else
                 {
-                    Toast.makeText(this, "No pots retirar més saldo del que tens en el compte", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "No pots retirar més saldo del que tens en el compte", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -51,11 +51,11 @@ class SaldoActivity : AppCompatActivity() {
                 {
                     usuariActual.saldo = usuariActual.saldo + editTextSaldo.text.toString().toDouble()
                     textViewSaldo.text =  String.format("%.2f", usuariActual.saldo)
-                    Toast.makeText(this, "Saldo afegit correctament", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Saldo afegit correctament", Toast.LENGTH_LONG).show()
                 }
                 else
                 {
-                    Toast.makeText(this, "No pots afegir més de 20 de saldo", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "No pots afegir més de 20 de saldo", Toast.LENGTH_LONG).show()
                 }
             }
         }

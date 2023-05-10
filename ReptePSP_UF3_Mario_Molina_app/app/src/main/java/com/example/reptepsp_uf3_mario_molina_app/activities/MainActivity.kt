@@ -27,13 +27,14 @@ class MainActivity : AppCompatActivity() {
         val edtTxtContrasenya = findViewById<TextInputEditText>(R.id.edtTxtContrasenya)
         val txtNewUser = findViewById<TextView>(R.id.btnNewUsuari)
         val btnIniciSessio = findViewById<Button>(R.id.btnIniciSessio)
-
+        var conexion = false
         showInputDialog(this, "IP", "Introdueix la ip del server") { text ->
             val ip = "192.168.1.132"
             val executor = Executors.newSingleThreadExecutor()
             executor.execute {
                 try {
                     serverConnect.socket = MySocket(Socket(text, PORT))
+                    conexion = true
                 } catch (e: UnknownHostException) {
                     runOnUiThread {
                         AlertDialog.Builder(this)
@@ -59,23 +60,30 @@ class MainActivity : AppCompatActivity() {
         }
         btnIniciSessio.setOnClickListener()
         {
-            val executor = Executors.newSingleThreadExecutor()
-            executor.execute {
-                serverConnect.socket.sendInt(2)
-                serverConnect.socket.sendString(edtTxtUsuari.text.toString())
-                serverConnect.socket.sendString(edtTxtContrasenya.text.toString())
-                val usuariActual = serverConnect.socket.rebreUsuari()
-                if (!usuariActual.getNomUsuari().equals("null")) {
-                    val intent = Intent(this, MainMenu::class.java)
-                    intent.putExtra(Keys.constKeys.LOGIN,usuariActual)
-                    startActivity(intent)
-                }
-                else
-                {
-                    runOnUiThread{
-                        Toast.makeText(this@MainActivity, "Aquest usuari no existeix o la contrasenya es incorrecte", Toast.LENGTH_LONG).show()
+            if(conexion)
+            {
+                val executor = Executors.newSingleThreadExecutor()
+                executor.execute {
+                    serverConnect.socket.sendInt(2)
+                    serverConnect.socket.sendString(edtTxtUsuari.text.toString())
+                    serverConnect.socket.sendString(edtTxtContrasenya.text.toString())
+                    val usuariActual = serverConnect.socket.rebreUsuari()
+                    if (!usuariActual.getNomUsuari().equals("null")) {
+                        val intent = Intent(this, MainMenu::class.java)
+                        intent.putExtra(Keys.constKeys.LOGIN,usuariActual)
+                        startActivity(intent)
+                    }
+                    else
+                    {
+                        runOnUiThread{
+                            Toast.makeText(this@MainActivity, "Aquest usuari no existeix o la contrasenya es incorrecte", Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
+            }
+            else
+            {
+                Toast.makeText(this, "La connexió amb el host no s'ha efectuat correctament", Toast.LENGTH_SHORT).show()
             }
         }
     }
