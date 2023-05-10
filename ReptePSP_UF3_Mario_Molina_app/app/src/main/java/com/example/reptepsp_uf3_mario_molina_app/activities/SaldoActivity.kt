@@ -68,4 +68,7 @@ class SaldoActivity : AppCompatActivity() {
             finish()
         }
     }
+    override fun onBackPressed() {
+        //super.onBackPressed()
+    }
 }

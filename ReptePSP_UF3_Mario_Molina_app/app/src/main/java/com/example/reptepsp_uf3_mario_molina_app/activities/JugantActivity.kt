@@ -54,4 +54,7 @@ class JugantActivity : AppCompatActivity() {
             }
         }
     }
+    override fun onBackPressed() {
+        //super.onBackPressed()
+    }
 }

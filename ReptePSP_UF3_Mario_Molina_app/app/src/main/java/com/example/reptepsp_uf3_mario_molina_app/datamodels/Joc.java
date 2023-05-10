@@ -1,4 +1,4 @@
-package datamodels;
+package com.example.reptepsp_uf3_mario_molina_app.datamodels;
 
 public class Joc {
     private String nomJoc;

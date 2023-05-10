@@ -1,6 +1,7 @@
 package com.example.reptepsp_uf3_mario_molina_app.sockets;
 
 import com.example.reptepsp_uf3_mario_molina_app.datamodels.GamesBuyed;
+import com.example.reptepsp_uf3_mario_molina_app.datamodels.Joc;
 import com.example.reptepsp_uf3_mario_molina_app.datamodels.Usuari;
 
 import java.io.DataInputStream;
@@ -159,6 +160,34 @@ public class MySocket {
             OutputStream os = socket.getOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(os);
             oos.writeObject(bool);
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+    }
+
+    public Joc rebreJoc() {
+        Joc joc = new Joc();
+        try {
+            InputStream is = socket.getInputStream();
+            ObjectInputStream ois = new ObjectInputStream(is);
+            String usuariString = (String )ois.readObject();
+            String[] parts = usuariString.split(":");
+            joc = new Joc(parts[0],parts[1],parts[2]);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return joc;
+    }
+
+    public void enviarJoc(Joc g) throws IOException {
+        try
+        {
+            String game = g.getNomJoc()+":"+g.getPreuJoc()+":"+g.getPreuPartida();
+            OutputStream os = socket.getOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(os);
+            oos.writeObject(game);
         }
         catch(Exception e)
         {

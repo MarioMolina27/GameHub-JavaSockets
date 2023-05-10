@@ -1,6 +1,7 @@
 package utilities;
 
 import datamodels.GamesBuyed;
+import datamodels.Joc;
 import datamodels.Usuari;
 
 import java.io.*;
@@ -124,6 +125,34 @@ public class MySocket implements Serializable {
         try
         {
             String game = g.getNomUsuari()+":"+g.getNomJoc()+":"+g.getPartidesComprades()+":"+g.getTarifaPlana();
+            OutputStream os = socket.getOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(os);
+            oos.writeObject(game);
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+    }
+
+    public Joc rebreJoc() {
+        Joc joc = new Joc();
+        try {
+            InputStream is = socket.getInputStream();
+            ObjectInputStream ois = new ObjectInputStream(is);
+            String usuariString = (String )ois.readObject();
+            String[] parts = usuariString.split(":");
+            joc = new Joc(parts[0],parts[1],parts[2]);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return joc;
+    }
+
+    public void enviarJoc(Joc g) throws IOException {
+        try
+        {
+            String game = g.getNomJoc()+":"+g.getPreuJoc()+":"+g.getPreuPartida();
             OutputStream os = socket.getOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(os);
             oos.writeObject(game);

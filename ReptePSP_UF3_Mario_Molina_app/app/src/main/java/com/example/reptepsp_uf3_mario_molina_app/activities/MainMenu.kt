@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.reptepsp_uf3_mario_molina_app.adapters.MenuAdapter
 import com.example.reptepsp_uf3_mario_molina_app.R
+import com.example.reptepsp_uf3_mario_molina_app.datamodels.Joc
 import com.example.reptepsp_uf3_mario_molina_app.datamodels.Keys
 import com.example.reptepsp_uf3_mario_molina_app.datamodels.Usuari
 import java.util.concurrent.Executors
@@ -82,6 +83,9 @@ class MainMenu : AppCompatActivity() {
                     val executor = Executors.newSingleThreadExecutor()
                     executor.execute {
                         MainActivity.serverConnect.socket.sendInt(2)
+                        val intent = Intent(this,ComprarJocActivity::class.java)
+                        intent.putExtra(Keys.constKeys.TO_COMPRAR,usuariActual)
+                        startActivity(intent)
                     }
                 }
                 2 -> {
@@ -112,7 +116,8 @@ class MainMenu : AppCompatActivity() {
                 }
             }
         }
-
-
+    }
+    override fun onBackPressed() {
+        //super.onBackPressed()
     }
 }

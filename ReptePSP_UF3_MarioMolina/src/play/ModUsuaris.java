@@ -51,13 +51,14 @@ public class ModUsuaris {
      * @return datamodels.Usuari modificat
      * @throws FileNotFoundException No es troba l'arxiu a la ruta seleccionada
      * */
-    public static Usuari gestionarJocs(Usuari u) throws IOException {
+    public static Usuari gestionarJocs(Usuari u,MySocket client) throws Exception {
         List<Joc> jocs = FilesManager.llegirJocs();
         List<GamesBuyed> jocsComprats = FilesManager.llegirJocsComprats(u.getNomUsuari());
         List<Joc> jocsDisponibles = ModUsuaris.retornarJocsDisponibles (jocs,jocsComprats);
+        client.sendInt(jocsDisponibles.size());
         if(jocsDisponibles.size()>0)
         {
-           comprarJoc(jocsDisponibles,u);
+           comprarJoc(jocsDisponibles,u,client);
         }
         else
         {
@@ -225,15 +226,18 @@ public class ModUsuaris {
         return u;
     }
 
-    public static void comprarJoc(List<Joc> jocsDisponibles,Usuari u) throws IOException {
+    public static void comprarJoc(List<Joc> jocsDisponibles,Usuari u,MySocket client) throws Exception {
         System.out.println("Salari actual: "+u.getSaldo());
-        mostrarLlistaJocs(jocsDisponibles);
-        System.out.print("Quin joc vols comptar? ");
-        int joc = Keyboard.readInt()-1;
+        String msg = "";
+        client.sendInt(jocsDisponibles.size());
+        for (Joc joc:jocsDisponibles)
+        {
+            client.enviarJoc(joc);
+        }
+        int joc = client.recieveInt();
         if(joc >=0 && joc < jocsDisponibles.size())
         {
-            System.out.println("Vols comprar la tarifa plana o una partida (P/TP)");
-            String tipusCompra = Keyboard.readString().toLowerCase();
+            String tipusCompra = client.recieveString();
             GamesBuyed game = ModUsuaris.obtenirJocCompratConcret(u.getNomUsuari(),jocsDisponibles.get(joc).getNomJoc());
             if(game == null)
             {
@@ -252,11 +256,13 @@ public class ModUsuaris {
                     game.setTarifaPlana(1);
                     FilesManager.modificarTxtJocsComprats(game);
                     u.setSaldo(u.getSaldo() - preu);
-                    System.out.println("datamodels.Joc comprat satisfactoriament");
+                    msg = "Tarfia plana comprada satisfactoriament";
+                    System.out.println(msg);
                 }
                 else
                 {
-                    System.out.println("No tens prou salari");
+                    msg = "No tens prou salari";
+                    System.out.println(msg);
                 }
             }
             else
@@ -267,18 +273,16 @@ public class ModUsuaris {
                     game.setPartidesComprades(game.getPartidesComprades()+1);
                     FilesManager.modificarTxtJocsComprats(game);
                     u.setSaldo(u.getSaldo() - preu);
-                    System.out.println("datamodels.Joc comprat satisfactoriament");
+                    msg = "Partida comprada satisfactoriament";
+                    System.out.println(msg);
                 }
                 else
                 {
-                    System.out.println("No tens prou salari");
+                    msg = "No tens prou salari";
+                    System.out.println(msg);
                 }
             }
-
-        }
-        else
-        {
-            System.out.println("Aquest joc no es pot comprar");
+            client.sendString(msg);
         }
     }
 

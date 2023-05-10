@@ -86,5 +86,8 @@ class RegisterUsuari : AppCompatActivity() {
             }
         }
     }
+    override fun onBackPressed() {
+        //super.onBackPressed()
+    }
 }
 

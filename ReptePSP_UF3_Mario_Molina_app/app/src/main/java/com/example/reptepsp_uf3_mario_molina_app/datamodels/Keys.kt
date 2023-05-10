@@ -12,5 +12,6 @@ class Keys
         const val MOD_PASSWORD = "MOD_PASSWORD"
         const val TO_MOD_USER = "TO_MOD_USER"
         const val TO_JUGAR = "TO_JUGAR"
+        const val TO_COMPRAR = "TO_COMPRAR"
     }
 }
