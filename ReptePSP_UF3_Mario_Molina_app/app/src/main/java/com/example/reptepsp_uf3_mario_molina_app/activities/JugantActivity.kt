@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import com.example.reptepsp_uf3_mario_molina_app.R
 import com.example.reptepsp_uf3_mario_molina_app.adapters.JocsCompratsAdapter
@@ -21,7 +22,8 @@ class JugantActivity : AppCompatActivity() {
 
         usuariActual = intent.getSerializableExtra(Keys.constKeys.TO_JUGAR) as Usuari
         val lstJocsJugar = findViewById<ListView>(R.id.lstJocsJugar)
-
+        val txtViewSaldoJugant = findViewById<TextView>(R.id.txtViewSaldoJugant)
+        txtViewSaldoJugant.text = String.format("%.2f", usuariActual.saldo)
         val executor = Executors.newSingleThreadExecutor()
         executor.execute {
             val llistaAmbElements = MainActivity.serverConnect.socket.recieveInt()

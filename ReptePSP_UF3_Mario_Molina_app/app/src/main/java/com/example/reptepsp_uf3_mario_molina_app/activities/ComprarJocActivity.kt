@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,8 @@ class ComprarJocActivity : AppCompatActivity() {
 
         usuariActual = intent.getSerializableExtra(Keys.constKeys.TO_COMPRAR) as Usuari
         jocsDisponibles = mutableListOf()
+        val txtViewSaldoComparJoc = findViewById<TextView>(R.id.txtViewSaldoComparJoc)
+        txtViewSaldoComparJoc.text = String.format("%.2f", usuariActual.saldo)
         val executor = Executors.newSingleThreadExecutor()
         executor.execute {
             val isEmpty = MainActivity.serverConnect.socket.recieveInt()

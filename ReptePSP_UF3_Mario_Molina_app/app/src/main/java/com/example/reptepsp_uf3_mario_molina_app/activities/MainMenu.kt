@@ -59,11 +59,11 @@ class MainMenu : AppCompatActivity() {
         val textViewSaldoMainManu = findViewById<TextView>(R.id.txtViewSaldoMainManu)
         val lstMainMenu = findViewById<ListView>(R.id.lstMainMenu)
         val opcions = arrayListOf(
-            "1- Jugar",
-            "2- Gestionar Jocs",
-            "3- Gestionar Saldo",
-            "4- Gestionar dades usuari",
-            "0- Sortida al menú d'entrada"
+            "Jugar",
+            "Gestionar Jocs",
+            "Gestionar Saldo",
+            "Gestionar dades usuari",
+            "Sortida al menú d'entrada"
         )
         val adapter = MenuAdapter(this, R.layout.menu_item,opcions)
         lstMainMenu.adapter = adapter

@@ -1,19 +1,18 @@
 package com.example.reptepsp_uf3_mario_molina_app.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.reptepsp_uf3_mario_molina_app.sockets.MySocket
 import com.example.reptepsp_uf3_mario_molina_app.R
 import com.example.reptepsp_uf3_mario_molina_app.datamodels.Keys
 import com.example.reptepsp_uf3_mario_molina_app.sockets.MySocket.PORT
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import java.net.Socket
+import java.net.UnknownHostException
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
@@ -29,14 +28,25 @@ class MainActivity : AppCompatActivity() {
         val txtNewUser = findViewById<TextView>(R.id.btnNewUsuari)
         val btnIniciSessio = findViewById<Button>(R.id.btnIniciSessio)
 
-
-        val ip = "192.168.1.132"
-        val executor = Executors.newSingleThreadExecutor()
-        executor.execute {
-            serverConnect.socket = MySocket(
-                Socket(ip, PORT)
-            )
+        showInputDialog(this, "IP", "Introdueix la ip del server") { text ->
+            val ip = "192.168.1.132"
+            val executor = Executors.newSingleThreadExecutor()
+            executor.execute {
+                try {
+                    serverConnect.socket = MySocket(Socket(text, PORT))
+                } catch (e: UnknownHostException) {
+                    runOnUiThread {
+                        AlertDialog.Builder(this)
+                            .setTitle("Error")
+                            .setMessage("No s'ha trobat el host: $text")
+                            .setPositiveButton("OK", null)
+                            .show()
+                    }
+                }
+            }
         }
+
+
 
         txtNewUser.setOnClickListener()
         {
@@ -69,6 +79,28 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    fun showInputDialog(context: Context, title: String, message: String, onTextEntered: (String) -> Unit) {
+        val input = EditText(context)
+        val lp = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT
+        )
+        input.layoutParams = lp
+
+        val alertDialog = AlertDialog.Builder(context)
+            .setTitle(title)
+            .setMessage(message)
+            .setView(input)
+            .setCancelable(false)
+            .setPositiveButton("Aceptar") { _, _ ->
+                onTextEntered(input.text.toString())
+            }
+            .setNegativeButton("Cancelar") { dialog, _ -> dialog.cancel() }
+            .create()
+        alertDialog.show()
+    }
+
     override fun onBackPressed() {
         //super.onBackPressed()
     }
