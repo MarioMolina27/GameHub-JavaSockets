@@ -25,8 +25,10 @@ class MainMenu : AppCompatActivity() {
             if (it.resultCode == RESULT_OK)
             {
                 val modPass = it.data?.getIntExtra(Keys.constKeys.MOD_PASSWORD,0)
-                val usuariActual = it.data?.getSerializableExtra(Keys.constKeys.TO_MAIN) as Usuari
+                usuariActual = it.data?.getSerializableExtra(Keys.constKeys.TO_MAIN) as Usuari
                 val mod = it.data?.getStringExtra(Keys.constKeys.TO_MAIN_EXTRA)
+                val textViewSaldoMainManu = findViewById<TextView>(R.id.txtViewSaldoMainManu)
+                textViewSaldoMainManu.text = String.format("%.2f", usuariActual.saldo)
                 if(mod.equals("mod"))
                 {
                     val executor = Executors.newSingleThreadExecutor()
@@ -54,7 +56,7 @@ class MainMenu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
         usuariActual = intent.getSerializableExtra(Keys.constKeys.LOGIN) as Usuari
-
+        val textViewSaldoMainManu = findViewById<TextView>(R.id.txtViewSaldoMainManu)
         val lstMainMenu = findViewById<ListView>(R.id.lstMainMenu)
         val opcions = arrayListOf(
             "1- Jugar",
@@ -65,6 +67,8 @@ class MainMenu : AppCompatActivity() {
         )
         val adapter = MenuAdapter(this, R.layout.menu_item,opcions)
         lstMainMenu.adapter = adapter
+
+        textViewSaldoMainManu.text = String.format("%.2f", usuariActual.saldo)
 
         lstMainMenu.onItemClickListener = AdapterView.OnItemClickListener()
         {

@@ -4,11 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainMenu">
+    tools:context=".activities.MainMenu"
+    android:background="#F2F2F2">
 
     <ListView
         android:id="@+id/lstMainMenu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:divider="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgCoinMainMenu" />
+
+    <ImageView
+        android:id="@+id/imgCoinMainMenu"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/coin"
+        android:layout_marginTop="15dp"
+        app:layout_constraintRight_toLeftOf="@+id/txtViewSaldoMainManu"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtViewSaldoMainManu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="18"
+        android:fontFamily="@font/visitor1"
+        android:layout_marginRight="30dp"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/imgCoinMainMenu"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
