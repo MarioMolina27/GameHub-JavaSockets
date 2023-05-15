@@ -1,4 +1,4 @@
 mmolina:mario:molina:mario@gmail.com:ES2114650100722030876293:$2a$10$e4qryEbHDZsejEelR.U7Be7BIod8r8a5GK9PNm.xJoEQlTWtgUWs2:210
-prueba:3:1:prueba@gmail.com:ES2114650100722030876293:$2a$10$wagwc/DXinFWGWwQ6BXCHuyOiWa38grdGyPwmmxogqAI8I14GBtpK:19.099999999999994
+prueba:3:1:prueba@gmail.com:ES2114650100722030876293:$2a$10$wagwc/DXinFWGWwQ6BXCHuyOiWa38grdGyPwmmxogqAI8I14GBtpK:40.099999999999994
 1:1:1:1@gmail.com:ES2114650100722030876293:$2a$10$g3vq4/0SeJlEBUPNyBf31uc9Br.uL2Ej5qOJoE0w0WhHnNlCs9CJS:2.0
 Mario :Mario:Molina Ballesteros :mariomolinaballesteros@gmail.com:ES2114650100722030876293:$2a$10$SXyNMl/iHDCRyZdGoBD./ebMSIMeJA74yrXxXTpPbZydJzKZtUIRa:20.0

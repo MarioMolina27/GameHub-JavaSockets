@@ -32,14 +32,36 @@ class MainActivity : AppCompatActivity() {
             val ip = "192.168.1.132"
             val executor = Executors.newSingleThreadExecutor()
             executor.execute {
-                try {
+                try
+                {
                     serverConnect.socket = MySocket(Socket(text, PORT))
                     conexion = true
-                } catch (e: UnknownHostException) {
+                }
+                catch (e: UnknownHostException) {
                     runOnUiThread {
                         AlertDialog.Builder(this)
                             .setTitle("Error")
                             .setMessage("No s'ha trobat el host: $text")
+                            .setPositiveButton("OK", null)
+                            .show()
+                    }
+                }
+                catch(e: java.net.ConnectException)
+                {
+                    runOnUiThread {
+                        AlertDialog.Builder(this)
+                            .setTitle("Error")
+                            .setMessage("No s'ha pogut connectar al host: $text")
+                            .setPositiveButton("OK", null)
+                            .show()
+                    }
+                }
+                catch (e: java.net.NoRouteToHostException)
+                {
+                    runOnUiThread {
+                        AlertDialog.Builder(this)
+                            .setTitle("Error")
+                            .setMessage("No s'ha pogut connectar al host: $text")
                             .setPositiveButton("OK", null)
                             .show()
                     }
