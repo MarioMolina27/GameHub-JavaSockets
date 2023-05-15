@@ -23,7 +23,7 @@ public class FilesManager {
      * @throws IOException Errors d'entrada o sortida de dades
      * */
 
-    public static void guardarUsuariTxt(Usuari u) throws IOException {
+    public static synchronized void  guardarUsuariTxt(Usuari u) throws IOException {
         String usuari = u.getNomUsuari()+":"+u.getNom()+":"+u.getCognoms()+":"+u.getEmail()+":"+u.getCompteCorrent()+":"+u.getPassword()+":"+u.getSaldo();
         FileWriter fw = new FileWriter(FILE_PATH_USERS, true);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -32,7 +32,7 @@ public class FilesManager {
 
     }
 
-    public static void guardarJocCompratTxt(GamesBuyed g) throws IOException {
+    public static synchronized void guardarJocCompratTxt(GamesBuyed g) throws IOException {
         String game = g.getNomUsuari()+":"+g.getNomJoc()+":"+g.getPartidesComprades()+":"+g.getTarifaPlana();
         FileWriter fw = new FileWriter(FILE_PATH_GAMES_BUYED, true);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -45,7 +45,7 @@ public class FilesManager {
      * @return booleà que ens indica si l'usuari existeix
      * @param nomUsuari nom de l'usuari introduit per l'usuari
      * */
-    public static boolean existenciaUsuariTxt(String nomUsuari)
+    public static synchronized boolean existenciaUsuariTxt(String nomUsuari)
     {
         boolean existeix=false;
         try
@@ -91,7 +91,7 @@ public class FilesManager {
      * @param email email introduit per l'usuari
      * */
 
-    public static boolean existenciaEmailTxt(String email)
+    public static synchronized boolean existenciaEmailTxt(String email)
     {
         boolean existeix=false;
         try
@@ -144,7 +144,7 @@ public class FilesManager {
      * @param usuari nom de l'usuari que s'ha de retornar
      * @return objecte datamodels.Usuari
      * */
-    public static Usuari buscarUsuariTxt(String usuari,String password)
+    public static synchronized Usuari buscarUsuariTxt(String usuari,String password)
     {
         Usuari u = new Usuari();
         String usuari1 = null;
@@ -202,7 +202,7 @@ public class FilesManager {
      * @return datamodels.Usuari
      * @param stringUsuari string amb totes les dades de l'usuari
      * */
-    public static Usuari retornarObjecteUsuari(String stringUsuari)
+    public static synchronized Usuari retornarObjecteUsuari(String stringUsuari)
     {
         String[] parts = stringUsuari.split(":");
         return new Usuari(parts[0],parts[5],parts[1],parts[2],parts[4],parts[3],Double.parseDouble(parts[6]));
@@ -213,7 +213,7 @@ public class FilesManager {
      * @param u usuari a reescriure en el txt
      * @throws IOException Errors d'entrada o sortida de dades
      * */
-    public static void modificarTxtUsuari(Usuari u) throws IOException {
+    public static synchronized void modificarTxtUsuari(Usuari u) throws IOException {
         String stringUsuari = u.getNomUsuari()+":"+u.getNom()+":"+u.getCognoms()+":"+u.getEmail()+":"+u.getCompteCorrent()+":"+u.getPassword()+":"+u.getSaldo();
         int i, finalIndex;
         File oldUsuaris = new File(FILE_PATH_USERS);
@@ -251,7 +251,7 @@ public class FilesManager {
         reenombrarArxius(FILE_PATH_USERS_2,FILE_PATH_USERS);
     }
 
-    public static void modificarTxtJocsComprats(GamesBuyed g) throws IOException {
+    public static synchronized void modificarTxtJocsComprats(GamesBuyed g) throws IOException {
         String stringUsuari = g.getNomUsuari()+":"+g.getNomJoc()+":"+g.getPartidesComprades()+":"+g.getTarifaPlana();
         int i, finalIndex,separador;
         boolean registre_trobat = false;
@@ -303,7 +303,7 @@ public class FilesManager {
     /**
      * Funció que reescriu el nom de l'arxiu secundari que creem a l'hora de modificar un usuari amb el nom de l'arxiu original.
      * */
-    public static void reenombrarArxius(String oldName, String newName)
+    public static synchronized void reenombrarArxius(String oldName, String newName)
     {
         File oldfile = new File(oldName);
         File newfile = new File(newName);
@@ -315,7 +315,7 @@ public class FilesManager {
      * @return Llista dels jocs de l'aplicació
      * @throws FileNotFoundException No es troba l'arxiu a la ruta seleccionada
      * */
-    public static List<Joc> llegirJocs () throws FileNotFoundException {
+    public static synchronized List<Joc> llegirJocs () throws FileNotFoundException {
         Scanner s = new Scanner(new File(FILE_PATH_GAMES));
         List<Joc> list = new ArrayList<>();
         while (s.hasNext()){
@@ -326,7 +326,7 @@ public class FilesManager {
         return list;
     }
 
-    public static List<GamesBuyed> llegirTotsJocsComprats () throws FileNotFoundException {
+    public static synchronized List<GamesBuyed> llegirTotsJocsComprats () throws FileNotFoundException {
         Scanner s = new Scanner(new File(FILE_PATH_GAMES_BUYED));
         List<GamesBuyed> list = new ArrayList<>();
         while (s.hasNext()){
@@ -336,7 +336,7 @@ public class FilesManager {
         s.close();
         return list;
     }
-    public static List<GamesBuyed> llegirJocsComprats (String nomUsuari) throws FileNotFoundException {
+    public static synchronized List<GamesBuyed> llegirJocsComprats (String nomUsuari) throws FileNotFoundException {
         Scanner s = new Scanner(new File(FILE_PATH_GAMES_BUYED));
         List<GamesBuyed> list = new ArrayList<>();
         while (s.hasNext()){
