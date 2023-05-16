@@ -29,7 +29,7 @@ class SaldoActivity : AppCompatActivity() {
 
         buttonSubtractSaldo.setOnClickListener()
         {
-            if(!editTextSaldo.text?.equals("")!!)
+            if(!editTextSaldo.text?.isEmpty()!!)
             {
                 if(usuariActual.saldo - editTextSaldo.text.toString().toDouble()>0)
                 {
@@ -42,10 +42,14 @@ class SaldoActivity : AppCompatActivity() {
                     Toast.makeText(this, "No pots retirar més saldo del que tens en el compte", Toast.LENGTH_LONG).show()
                 }
             }
+            else
+            {
+                Toast.makeText(this, "Introdueix un valor de saldo abans de fer cap operació", Toast.LENGTH_LONG).show()
+            }
         }
         buttonAddSaldo.setOnClickListener()
         {
-            if(!editTextSaldo.text?.equals("")!!)
+            if(!editTextSaldo.text?.isEmpty()!!)
             {
                 if(editTextSaldo.text.toString().toDouble()<=20)
                 {
@@ -57,6 +61,10 @@ class SaldoActivity : AppCompatActivity() {
                 {
                     Toast.makeText(this, "No pots afegir més de 20 de saldo", Toast.LENGTH_LONG).show()
                 }
+            }
+            else
+            {
+                Toast.makeText(this, "Introdueix un valor de saldo abans de fer cap operació", Toast.LENGTH_LONG).show()
             }
         }
 
